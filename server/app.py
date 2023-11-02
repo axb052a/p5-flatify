@@ -101,11 +101,12 @@ class MusicResource(Resource):
         title = data.get("title")
         artist = data.get("artist")
         genres = data.get("genres", [])
+        image = data.get('image')  # Get the image URL from the request
 
         if not (title and artist):
             return make_response({"error": "Title and artist are required"}, 400)
 
-        new_music = Music(title=title, artist=artist)
+        new_music = Music(title=title, artist=artist, image=image)
 
         # Add genres to the new music
         for genre_name in genres:
@@ -128,6 +129,7 @@ class MusicResource(Resource):
         # Update music fields
         music.title = data.get("title", music.title)
         music.artist = data.get("artist", music.artist)
+        music.image = data.get('image', music.image)  # Update the image URL
 
         # Update genres
         new_genres = data.get("genres", [])
@@ -167,11 +169,12 @@ class GenreResource(Resource):
         data = request.get_json()
 
         name = data.get("name")
+        image = data.get('image')  # Get the image URL from the request
 
         if not name:
             return make_response({"error": "Name is required"}, 400)
 
-        new_genre = Genre(name=name)
+        new_genre = Genre(name=name, image=image)
 
         db.session.add(new_genre)
         db.session.commit()
@@ -187,6 +190,7 @@ class GenreResource(Resource):
 
         # Update genre fields
         genre.name = data.get("name", genre.name)
+        genre.image = data.get('image', genre.image)  # Update the image URL
 
         db.session.commit()
 
@@ -219,11 +223,12 @@ class PlaylistResource(Resource):
 
         name = data.get("name")
         musics = data.get("musics", [])
+        image = data.get('image')  # Get the image URL from the request
 
         if not name:
             return make_response({"error": "Name is required"}, 400)
 
-        new_playlist = Playlist(name=name)
+        new_playlist = Playlist(name=name, image=image)
 
         # Add musics to the new playlist
         for music_id in musics:
@@ -245,6 +250,7 @@ class PlaylistResource(Resource):
 
         # Update playlist fields
         playlist.name = data.get("name", playlist.name)
+        playlist.image = data.get('image', playlist.image)  # Update the image URL
 
         # Update musics
         new_musics = data.get("musics", [])

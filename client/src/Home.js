@@ -28,8 +28,8 @@ function Home({ user }) {
       setSearchResults(
         musicList.filter(
           (music) =>
-            !music.title.toLowerCase().includes('example') &&
-            music.title.toLowerCase().includes(searchTerm.toLowerCase())
+            (music.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              music.artist.toLowerCase().includes(searchTerm.toLowerCase()))
         )
       );
     }
@@ -112,6 +112,7 @@ function Home({ user }) {
                       id={music.id}
                       title={music.title}
                       artist={music.artist}
+                      image={music.image} 
                     />
                   </Grid>
                 ))

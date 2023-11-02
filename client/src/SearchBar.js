@@ -17,7 +17,7 @@ function SearchBar({ onSearch }) {
         variant="outlined"
         value={searchTerm}
         onChange={handleChange}
-        placeholder="Enter a song"
+        placeholder="Enter a song title or artist"
         fullWidth
       />
     </div>

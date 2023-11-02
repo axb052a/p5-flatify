@@ -12,6 +12,7 @@ import {
 const Playlist = () => {
   const [playlists, setPlaylists] = useState([]);
   const [newPlaylistName, setNewPlaylistName] = useState('');
+  const [newPlaylistImage, setNewPlaylistImage] = useState(''); 
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
 
   useEffect(() => {
@@ -29,12 +30,13 @@ const Playlist = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: newPlaylistName }),
+      body: JSON.stringify({ name: newPlaylistName, imageUrl: newPlaylistImage  }),
     })
       .then((response) => response.json())
       .then((data) => {
         setPlaylists([...playlists, data]);
         setNewPlaylistName('');
+        setNewPlaylistImage('');
       })
       .catch((error) => console.error('Error creating playlist:', error));
   };
@@ -53,6 +55,7 @@ const Playlist = () => {
         .then((data) => {
           setPlaylists(playlists.map((playlist) => (playlist.id === selectedPlaylist.id ? data : playlist)));
           setNewPlaylistName('');
+          setNewPlaylistImage('');
           setSelectedPlaylist(null);
         })
         .catch((error) => console.error('Error updating playlist:', error));
@@ -74,6 +77,7 @@ const Playlist = () => {
     // Set selected playlist for editing
     setSelectedPlaylist(playlist);
     setNewPlaylistName(playlist.name);
+    setNewPlaylistImage(playlist.image);
   };
 
   return (
@@ -87,12 +91,19 @@ const Playlist = () => {
         value={newPlaylistName}
         onChange={(e) => setNewPlaylistName(e.target.value)}
       />
+      <TextField
+        label="Image"
+        variant="outlined"
+        value={newPlaylistImage}
+        onChange={(e) => setNewPlaylistImage(e.target.value)}
+      />
       <Button variant="contained" color="primary" onClick={selectedPlaylist ? handleUpdatePlaylist : handleCreatePlaylist}>
         {selectedPlaylist ? 'Update Playlist' : 'Create Playlist'}
       </Button>
       <List>
         {playlists.map((playlist) => (
           <ListItem key={playlist.id}>
+            <img src={playlist.image} alt={playlist.name} style={{ width: '100px', height: '100px', marginRight: '10px' }} />
             <ListItemText primary={playlist.name} />
             <Button variant="outlined" color="secondary" onClick={() => handleDeletePlaylist(playlist.id)}>
               Delete

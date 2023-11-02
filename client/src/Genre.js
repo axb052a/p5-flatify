@@ -12,6 +12,7 @@ import {
 const Genre = () => {
   const [genres, setGenres] = useState([]);
   const [newGenreName, setNewGenreName] = useState('');
+  const [newGenreImage, setNewGenreImage] = useState('');
   const [selectedGenre, setSelectedGenre] = useState(null);
 
   useEffect(() => {
@@ -29,12 +30,13 @@ const Genre = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: newGenreName }),
+      body: JSON.stringify({ name: newGenreName, imageUrl: newGenreImage }),
     })
       .then((response) => response.json())
       .then((data) => {
         setGenres([...genres, data]);
         setNewGenreName('');
+        setNewGenreImage('');
       })
       .catch((error) => console.error('Error creating genre:', error));
   };
@@ -53,6 +55,7 @@ const Genre = () => {
         .then((data) => {
           setGenres(genres.map((genre) => (genre.id === selectedGenre.id ? data : genre)));
           setNewGenreName('');
+          setNewGenreImage('');
           setSelectedGenre(null);
         })
         .catch((error) => console.error('Error updating genre:', error));
@@ -74,6 +77,7 @@ const Genre = () => {
     // Set selected genre for editing
     setSelectedGenre(genre);
     setNewGenreName(genre.name);
+    setNewGenreImage(genre.image);
   };
 
   return (
@@ -87,12 +91,19 @@ const Genre = () => {
         value={newGenreName}
         onChange={(e) => setNewGenreName(e.target.value)}
       />
+       <TextField
+        label="Image"
+        variant="outlined"
+        value={newGenreImage}
+        onChange={(e) => setNewGenreImage(e.target.value)}
+      />
       <Button variant="contained" color="primary" onClick={selectedGenre ? handleUpdateGenre : handleCreateGenre}>
         {selectedGenre ? 'Update Genre' : 'Create Genre'}
       </Button>
       <List>
         {genres.map((genre) => (
           <ListItem key={genre.id}>
+            <img src={genre.image} alt={genre.image} style={{ width: '100px', height: '100px', marginRight: '10px' }} />
             <ListItemText primary={genre.name} />
             <Button variant="outlined" color="secondary" onClick={() => handleDeleteGenre(genre.id)}>
               Delete

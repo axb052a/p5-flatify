@@ -13,7 +13,8 @@ const Music = () => {
   const [musicList, setMusicList] = useState([]);
   const [newMusicTitle, setNewMusicTitle] = useState('');
   const [newMusicArtist, setNewMusicArtist] = useState('');
-  const [newMusicGenres, setNewMusicGenres] = useState('');
+  const [newMusicGenres, setNewMusicGenres] = useState([]);
+  const [newMusicImage, setNewMusicImage] = useState('');
   const [selectedMusic, setSelectedMusic] = useState(null);
 
   useEffect(() => {
@@ -31,14 +32,16 @@ const Music = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title: newMusicTitle, artist: newMusicArtist, genres: newMusicGenres.split(',') }),
+      body: JSON.stringify({ title: newMusicTitle, artist: newMusicArtist, genres: newMusicGenres, imageUrl: newMusicImage, }),
     })
       .then((response) => response.json())
       .then((data) => {
         setMusicList([...musicList, data]);
         setNewMusicTitle('');
         setNewMusicArtist('');
-        setNewMusicGenres(data.genres ? data.genres.join(', ') : '');      })
+        setNewMusicGenres([]); 
+        setNewMusicImage('');     
+      })
       .catch((error) => console.error('Error creating music:', error));
   };
 
@@ -50,14 +53,15 @@ const Music = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ title: newMusicTitle, artist: newMusicArtist, genres: newMusicGenres.split(',') }),
+        body: JSON.stringify({ title: newMusicTitle, artist: newMusicArtist, genres: newMusicGenres }),
       })
         .then((response) => response.json())
         .then((data) => {
           setMusicList(musicList.map((music) => (music.id === selectedMusic.id ? data : music)));
           setNewMusicTitle('');
           setNewMusicArtist('');
-          setNewMusicGenres('');
+          setNewMusicGenres([]);
+          setNewMusicImage(''); 
           setSelectedMusic(null);
         })
         .catch((error) => console.error('Error updating music:', error));
@@ -80,7 +84,8 @@ const Music = () => {
     setSelectedMusic(music);
     setNewMusicTitle(music.title);
     setNewMusicArtist(music.artist);
-    setNewMusicGenres(music.genres.join(', '));
+    setNewMusicGenres(music.genres);
+    setNewMusicImage(music.image);
   };
 
   return (
@@ -101,27 +106,42 @@ const Music = () => {
         onChange={(e) => setNewMusicArtist(e.target.value)}
       />
       <TextField
-        label="Genres (comma-separated)"
+        label="Genres"
         variant="outlined"
         value={newMusicGenres}
         onChange={(e) => setNewMusicGenres(e.target.value)}
+      />
+      <TextField
+        label="Image"
+        variant="outlined"
+        value={newMusicImage}
+        onChange={(e) => setNewMusicImage(e.target.value)}
       />
       <Button variant="contained" color="primary" onClick={selectedMusic ? handleUpdateMusic : handleCreateMusic}>
         {selectedMusic ? 'Update Music' : 'Create Music'}
       </Button>
       <List>
-        {musicList.map((music) => (
-          <ListItem key={music.id}>
-            <ListItemText primary={music.title} secondary={music.artist} />
-            <Button variant="outlined" color="secondary" onClick={() => handleDeleteMusic(music.id)}>
-              Delete
-            </Button>
-            <Button variant="outlined" color="primary" onClick={() => handleEditMusic(music)}>
-              Edit
-            </Button>
-          </ListItem>
-        ))}
-      </List>
+  {musicList.map((music) => (
+    <ListItem key={music.id}>
+      <img src={music.image} alt={music.title} style={{ width: '100px', height: '100px', marginRight: '10px' }} />
+      <ListItemText
+        primary={music.title}
+        secondary={
+          <>
+            <div>{music.artist}</div>
+            <div>Genres: {music.genres}</div>
+          </>
+        }
+      />
+      <Button variant="outlined" color="secondary" onClick={() => handleDeleteMusic(music.id)}>
+        Delete
+      </Button>
+      <Button variant="outlined" color="primary" onClick={() => handleEditMusic(music)}>
+        Edit
+      </Button>
+    </ListItem>
+  ))}
+</List>
     </Paper>
   );
 };
