@@ -1,5 +1,6 @@
+// Home.js
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, Grid, CircularProgress} from '@mui/material';
+import { Paper, Typography, Grid, CircularProgress } from '@mui/material';
 import SearchBar from './SearchBar';
 import { NavLink } from 'react-router-dom';
 import MusicCard from './MusicCard';
@@ -41,7 +42,7 @@ function Home({ user }) {
       spacing={3}
       mt={3}
       style={{
-        backgroundImage: 'url("https://wallpapercave.com/wp/wp10236696.png")',
+        backgroundImage: 'url("https://wallpapercave.com/wp/wp5637699.jpg")',
         backgroundSize: 'cover',
         minHeight: '100vh',
       }}
@@ -63,10 +64,10 @@ function Home({ user }) {
             ) : (
               <div>
                 <img
-                  src="https://i.pinimg.com/originals/5b/91/80/5b9180ca8c9f3024a89efebe0bca81f8.jpg"
+                  src="https://wallpapercave.com/wp/wp7937753.jpg"
                   alt="Flatify Logo"
                   style={{
-                    maxWidth: '200px',
+                    maxWidth: '600px',
                     display: 'block',
                     marginLeft: 'auto',
                     marginRight: 'auto',
@@ -82,16 +83,25 @@ function Home({ user }) {
             <>
               <Typography variant="body18" paragraph>
                 Flatify is a platform to find and explore songs in multiple genres and playlists. Explore the MusicCards to see a song associated with the artist.
-                You could reference your <NavLink to="/profile" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>Profile</NavLink> to determine which songs you love.
+                You could reference your{' '}
+                <NavLink to="/profile" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                  Profile
+                </NavLink>{' '}
+                to determine which songs you love.
               </Typography>
               <SearchBar onSearch={handleSearch} />
             </>
           ) : (
             <Typography variant="body18" paragraph>
-              Welcome to Flatify!
-              Flatify is a platform designed to help you find and explore songs, genres, and playlists. To get started, please{' '}
-              <NavLink to="/login" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>log in</NavLink> or <NavLink to="/signup" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>sign up</NavLink>.
-              Our extensive database provides a comprehensive collection of music, making it accessible and tailored to your preferences.
+              Welcome to Flatify! Flatify is a platform designed to help you find and explore songs, genres, and playlists. To get started, please{' '}
+              <NavLink to="/login" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                log in
+              </NavLink>{' '}
+              or{' '}
+              <NavLink to="/signup" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                sign up
+              </NavLink>
+              . Our extensive database provides a comprehensive collection of music, making it accessible and tailored to your preferences.
               Whether you're a music enthusiast or someone curious about different genres, Flatify offers a personalized listening experience.
               Unlock the world of music and expand your playlist. Join us on this musical journey as we make discovering new songs exciting.
               Start your exploration today!
@@ -112,7 +122,7 @@ function Home({ user }) {
                       id={music.id}
                       title={music.title}
                       artist={music.artist}
-                      image={music.image} 
+                      image={music.image}
                     />
                   </Grid>
                 ))

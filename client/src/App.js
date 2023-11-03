@@ -1,4 +1,4 @@
-// Import necessary libraries and components
+// App.js
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Home from './Home';
@@ -11,6 +11,7 @@ import UserProfile from './UserProfile';
 import Genre from './Genre';
 import Playlist from './Playlist';
 import Music from './Music';
+import Favorite from './Favorite';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -52,6 +53,7 @@ function App() {
             <Route path="/genre" element={<Genre />} />
             <Route path="/playlist" element={<Playlist />} />
             <Route path="/music" element={<Music />} />
+            <Route path="/favorite" element={<Favorite />} />
           </>
         )}
         <Route path="/search" element={<SearchPage user={user} />} />

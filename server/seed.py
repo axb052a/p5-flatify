@@ -92,7 +92,7 @@ if __name__ == '__main__':
         for genre_data in genre_list:
             genre = Genre(
                 name=genre_data["name"],
-                image=genre_data["image"]
+                image=genre_data["image"],
             )
 
             # Add musics to the genre
@@ -103,8 +103,7 @@ if __name__ == '__main__':
 
             db.session.add(genre)
             db.session.commit()
-
-        print("Genres seeded successfully.")
+            print("Genres seeded successfully.")
         
         # Seed for Playlists
 
@@ -120,7 +119,8 @@ if __name__ == '__main__':
         for playlist_data in playlist_list:
             playlist = Playlist(
                 name=playlist_data["name"],
-                image=playlist_data['image'])  
+                image=playlist_data["image"],
+            )
 
             # Add musics to the playlist
             music_ids = playlist_data.get("musics", [])
@@ -128,9 +128,31 @@ if __name__ == '__main__':
 
             playlist.musics = playlist_musics
 
-            db.session.add(playlist)  # Add the playlist to the session
+            db.session.add(playlist)
             db.session.commit()
-            print("Playlist seeded successfully.")
+            print("Playlists seeded successfully.")
+
+            # Seed for Favorites
+            favorite_list = [
+                {"user": 1, "musics": 1},
+                {"user": 1, "musics": 2},
+                {"user": 2, "musics": 3},
+                {"user": 3, "musics": 4},
+                {"user": 4, "musics": 5},
+                {"user": 5, "musics": 6},
+                {"user": 6, "musics": 7},
+                {'user': 7, "musics": 18}
+            ]
+
+            for favorite_data in favorite_list:
+                favorite = Favorite(
+                    user_id=favorite_data["user"],
+                    music_id=favorite_data.get("musics"),
+                )
+
+                db.session.add(favorite)
+                db.session.commit()
+            print("Favorites seeded successfully.")
 
 
 

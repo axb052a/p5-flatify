@@ -8,11 +8,10 @@ export default function Logout({ setUser }) {
   function handleLogOut() {
     fetch("http://localhost:5555/logout", {
       method: "DELETE",
-      credentials: 'include',  // Include credentials in the request
+      credentials: 'include',  
     }).then((r) => {
       if (r.ok) {
         setUser(null);
-        // Redirect to the home page
         navigate.push("/");
       }
     });

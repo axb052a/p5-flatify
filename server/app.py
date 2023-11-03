@@ -80,7 +80,7 @@ class Logout(Resource):
     def delete(self):
         session["user_id"] = None
         return {"message": "204: No Content"}, 204
-
+    
 class MusicResource(Resource):
     def get(self, music_id=None):
         if music_id:
@@ -152,13 +152,13 @@ class MusicResource(Resource):
         db.session.commit()
 
         return make_response({"message": "Music deleted successfully"}, 204)
-
+    
 class GenreResource(Resource):
     def get(self, genre_id=None):
         if genre_id is not None:
             genre = Genre.query.get(genre_id)
             if genre:
-                return make_response(genre.to_dict(), 200)
+                return make_response(genre.to_dict(include=['musics']), 200)
             else:
                 return make_response({"error": "Genre not found"}, 404)
         else:
@@ -211,7 +211,7 @@ class PlaylistResource(Resource):
         if playlist_id is not None:
             playlist = Playlist.query.get(playlist_id)
             if playlist:
-                return make_response(playlist.to_dict(), 200)
+                return make_response(playlist.to_dict(include=['musics']), 200)
             else:
                 return make_response({"error": "Playlist not found"}, 404)
         else:
@@ -274,6 +274,48 @@ class PlaylistResource(Resource):
 
         return make_response({"message": "Playlist deleted successfully"}, 204)
 
+class FavoriteResource(Resource): # 
+    def get(self, favorite_id=None):
+        if favorite_id is not None:
+            favorite = Favorite.query.get(favorite_id)
+            if favorite:
+                return make_response(favorite.to_dict(include=['musics']), 200)
+            else:
+                return make_response({"error": "Favorite not found"}, 404)
+        else:
+            favorites = Favorite.query.all()
+            return make_response([favorite.to_dict() for favorite in favorites], 200)
+
+    def post(self):
+        data = request.get_json()
+
+        user_id = data.get("user_id")
+        music_id = data.get("music_id")
+
+        if not user_id or not any([music_id]):
+            return make_response({"error": "User and at least one of music is required"}, 400)
+
+        new_favorite = Favorite(
+            user_id=user_id,
+            music_id=music_id,
+        )
+
+        db.session.add(new_favorite)
+        db.session.commit()
+
+        return make_response(jsonify(new_favorite.to_dict()), 201)
+
+    def delete(self, favorite_id):
+        favorite = Favorite.query.get(favorite_id)
+        if not favorite:
+            return make_response({"error": "Favorite not found"}, 404)
+
+        db.session.delete(favorite)
+        db.session.commit()
+
+        return make_response({"message": "Favorite deleted successfully"}, 204)
+
+
 # Add routes to the API
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
@@ -282,6 +324,7 @@ api.add_resource(Logout, "/logout")
 api.add_resource(MusicResource, "/music", "/music/<int:music_id>")
 api.add_resource(GenreResource, "/genre", "/genre/<int:genre_id>")
 api.add_resource(PlaylistResource, "/playlist", "/playlist/<int:playlist_id>")
+api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:favorite_id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

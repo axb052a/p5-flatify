@@ -12,7 +12,7 @@ import {
 const Playlist = () => {
   const [playlists, setPlaylists] = useState([]);
   const [newPlaylistName, setNewPlaylistName] = useState('');
-  const [newPlaylistImage, setNewPlaylistImage] = useState(''); 
+  const [newPlaylistImage, setNewPlaylistImage] = useState('');
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
 
   useEffect(() => {
@@ -30,7 +30,9 @@ const Playlist = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: newPlaylistName, imageUrl: newPlaylistImage  }),
+      body: JSON.stringify({ 
+        name: newPlaylistName, 
+        image: newPlaylistImage }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -49,7 +51,10 @@ const Playlist = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: newPlaylistName }),
+        body: JSON.stringify({ 
+          name: newPlaylistName,
+          image: newPlaylistImage,
+         }),
       })
         .then((response) => response.json())
         .then((data) => {

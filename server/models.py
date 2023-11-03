@@ -12,6 +12,9 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    
+    # Relationship
+    favorites = db.relationship('Favorite', back_populates='user')
 
     @hybrid_property
     def password_hash(self):
@@ -65,6 +68,7 @@ class Music(db.Model, SerializerMixin):
     # Relationships
     genres = db.relationship('Genre', secondary='music_genre_association', back_populates='musics')
     playlists = db.relationship('Playlist', secondary='playlist_music_association', back_populates='musics')
+    favorites = db.relationship('Favorite', back_populates='music')
 
     @validates('title', 'artist')
     def validate_music_fields(self, key, value):
@@ -76,7 +80,7 @@ class Music(db.Model, SerializerMixin):
         return f"Music {self.title}, ID {self.id}"
 
     # Additional settings for serialization
-    serialize_rules = ('-genres', "-playlists")
+    serialize_rules = ('-genres', "-playlists", "-favorites")
 
 # Define Genre model
 class Genre(db.Model, SerializerMixin):
@@ -88,6 +92,7 @@ class Genre(db.Model, SerializerMixin):
     
     # Relationships
     musics = db.relationship('Music', secondary='music_genre_association', back_populates='genres')
+
 
     @validates('name')
     def validate_genre_name(self, key, value):
@@ -111,7 +116,10 @@ class Playlist(db.Model, SerializerMixin):
     
     # Relationships
     musics = db.relationship('Music', secondary='playlist_music_association', back_populates='playlists')
-
+ 
+     # Additional settings for serialization
+    serialize_rules = ('-musics',)
+    
     @validates('name')
     def validate_playlist_name(self, key, value):
         if not len(value) > 0:
@@ -121,5 +129,20 @@ class Playlist(db.Model, SerializerMixin):
     def __repr__(self):
         return f"Playlist {self.name}, ID {self.id}"
 
-    # Additional settings for serialization
-    serialize_rules = ('-musics',)
+#Define the Favorite Model
+class Favorite(db.Model, SerializerMixin):
+    __tablename__ = 'favorites'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    music_id = db.Column(db.Integer, db.ForeignKey('musics.id'), nullable=False)
+
+    # Relationships
+    user = db.relationship('User', back_populates='favorites')
+    music = db.relationship('Music', back_populates='favorites')
+    
+     # Additional settings for serialization
+    serialize_rules = ('-music','-user')
+
+    def __repr__(self):
+        return f"Favorite ID {self.id}"
