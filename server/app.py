@@ -70,16 +70,26 @@ class Login(Resource):
 
 class CheckSession(Resource):
     def get(self):
-        user = User.query.filter(User.id == session.get("user_id")).first()
+        user_id = session.get("user_id")
+        print(f"Debug: User ID from session: {user_id}")
+
+        if not user_id:
+            print("Debug: No user in session")
+            return {"message": "No user in session"}, 401
+
+        user = User.query.get(user_id)
+
         if user:
+            print(f"Debug: User found in the database - {user}")
             return user.to_dict(rules=("_password_hash",))
         else:
-            return {"message": "401: Not Authorized"}, 401
+            print("Debug: User not found in the database")
+            return {"message": "User not found in the database"}, 401
 
 class Logout(Resource):
     def delete(self):
         session["user_id"] = None
-        return {"message": "204: No Content"}, 204
+        return {"message": "200: No Content"}, 200
     
 class MusicResource(Resource):
     def get(self, music_id=None):
@@ -129,30 +139,16 @@ class MusicResource(Resource):
         # Update music fields
         music.title = data.get("title", music.title)
         music.artist = data.get("artist", music.artist)
-        music.image = data.get('image', music.image)  # Update the image URL
+        music.image = data.get('image', music.image)
 
-        # Update genres
-        new_genres = data.get("genres", [])
-        music.genres.clear()
-        for genre_name in new_genres:
-            genre = Genre.query.filter_by(name=genre_name).first()
-            if genre:
-                music.genres.append(genre)
+        # Update genre and playlist
+        music.genre = Genre.query.get(data.get("genre_id"))
+        music.playlist = Playlist.query.get(data.get("playlist_id"))
 
         db.session.commit()
 
-        return make_response(jsonify(music.to_dict()), 200)
+        return make_response(jsonify(music.to_dict()), 200)   
 
-    def delete(self, music_id):
-        music = Music.query.get(music_id)
-        if not music:
-            return make_response({"error": "Music not found"}, 404)
-
-        db.session.delete(music)
-        db.session.commit()
-
-        return make_response({"message": "Music deleted successfully"}, 204)
-    
 class GenreResource(Resource):
     def get(self, genre_id=None):
         if genre_id is not None:
@@ -194,8 +190,15 @@ class GenreResource(Resource):
 
         db.session.commit()
 
-        return make_response(genre.to_dict(), 200)
+        # Update associated music entries
+        for music in genre.musics:
+            music.title = data.get("music_title", music.title)  # Update music title if provided
+            music.artist = data.get("music_artist", music.artist)  # Update music artist if provided
+            music.image = data.get("music_image", music.image)  # Update music image if provided
 
+        db.session.commit()
+
+        return make_response(genre.to_dict(), 200)
     def delete(self, genre_id):
         genre = Genre.query.get(genre_id)
         if not genre:
@@ -252,16 +255,16 @@ class PlaylistResource(Resource):
         playlist.name = data.get("name", playlist.name)
         playlist.image = data.get('image', playlist.image)  # Update the image URL
 
-        # Update musics
-        new_musics = data.get("musics", [])
-        playlist.musics.clear()
-        for music_id in new_musics:
-            music = Music.query.get(music_id)
-            if music:
-                playlist.musics.append(music)
-
         db.session.commit()
 
+        # Update associated music entries
+        for music in playlist.musics:
+            music.title = data.get("music_title", music.title)  # Update music title if provided
+            music.artist = data.get("music_artist", music.artist)  # Update music artist if provided
+            music.image = data.get("music_image", music.image)  # Update music image if provided
+
+        db.session.commit()
+        
         return make_response(playlist.to_dict(), 200)
 
     def delete(self, playlist_id):
@@ -274,26 +277,25 @@ class PlaylistResource(Resource):
 
         return make_response({"message": "Playlist deleted successfully"}, 204)
 
-class FavoriteResource(Resource): # 
-    def get(self, favorite_id=None):
-        if favorite_id is not None:
-            favorite = Favorite.query.get(favorite_id)
-            if favorite:
-                return make_response(favorite.to_dict(include=['musics']), 200)
-            else:
-                return make_response({"error": "Favorite not found"}, 404)
-        else:
-            favorites = Favorite.query.all()
-            return make_response([favorite.to_dict() for favorite in favorites], 200)
+class FavoriteResource(Resource):
+    def get(self, user_id=None):
+        if not user_id:
+            user_id = session.get("user_id")
+        user = User.query.get(user_id)
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+
+        favorites = Favorite.query.filter_by(user_id=user_id).all()
+        return make_response([favorite.music.to_dict() for favorite in favorites], 200)
 
     def post(self):
         data = request.get_json()
 
-        user_id = data.get("user_id")
+        user_id = session.get("user_id")  # Get the user ID from the session
         music_id = data.get("music_id")
 
-        if not user_id or not any([music_id]):
-            return make_response({"error": "User and at least one of music is required"}, 400)
+        if not user_id or not music_id:
+            return make_response({"error": "User and music ID are required"}, 400)
 
         new_favorite = Favorite(
             user_id=user_id,
@@ -324,7 +326,7 @@ api.add_resource(Logout, "/logout")
 api.add_resource(MusicResource, "/music", "/music/<int:music_id>")
 api.add_resource(GenreResource, "/genre", "/genre/<int:genre_id>")
 api.add_resource(PlaylistResource, "/playlist", "/playlist/<int:playlist_id>")
-api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:favorite_id>")
+api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:user_id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

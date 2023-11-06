@@ -54,6 +54,9 @@ function NavBar({ user, setUser }) {
             <Button color="inherit" component={NavLink} to="/search">
               Search
             </Button>
+            <Button color="inherit" component={NavLink} to="/musicplayer">
+              Music PLayer
+            </Button>
             <Button color="inherit" component={NavLink} to="/music">
               Music
             </Button>

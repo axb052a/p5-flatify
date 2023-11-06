@@ -87,8 +87,11 @@ function Home({ user }) {
                 <NavLink to="/profile" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
                   Profile
                 </NavLink>{' '}
-                to determine which songs you love.
-              </Typography>
+                to determine which songs you love. Listen to the songs in the {' '}
+                <NavLink to="/musicplayer" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                  Music Player
+                </NavLink>{' '}.              
+                </Typography>
               <SearchBar onSearch={handleSearch} />
             </>
           ) : (
@@ -123,6 +126,8 @@ function Home({ user }) {
                       title={music.title}
                       artist={music.artist}
                       image={music.image}
+                      genre={music.genre}
+                      playlist={music.playlist}
                     />
                   </Grid>
                 ))

@@ -1,5 +1,5 @@
 // UserProfile.js
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Avatar,
   Paper,
@@ -9,20 +9,10 @@ import {
   CardContent,
   CardHeader,
   List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 
 const UserProfile = ({ user }) => {
-  const [favoriteMusic, setFavoriteMusic] = useState([]);
 
-  useEffect(() => {
-    // Fetch user's favorite music
-    fetch(`http://localhost:5555/favorite`)
-      .then((response) => response.json())
-      .then((data) => setFavoriteMusic(data))
-      .catch((error) => console.error('Error fetching favorite music:', error));
-  }, [user.id]);
 
   return (
     <Grid container spacing={3} mt={3}>
@@ -53,20 +43,7 @@ const UserProfile = ({ user }) => {
             <CardHeader title="Favorite Music" />
             <CardContent>
               <List>
-                {favoriteMusic.map((music) => (
-                  <ListItem key={music.id}>
-                    <ListItemText
-                      primary={music.title}
-                      secondary={
-                        <>
-                          <div>Title: {music.title}</div>
-                          <div>Artist: {music.artist}</div>
-                          {/* Add other information about the favorite music */}
-                        </>
-                      }
-                    />
-                  </ListItem>
-                ))}
+      
               </List>
             </CardContent>
           </Card>

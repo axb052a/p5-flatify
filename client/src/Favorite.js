@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Favorite = () => {
+const Favorite = ({user}) => {
   const [favorites, setFavorites] = useState([]);
   const [newFavorite, setNewFavorite] = useState({
     user_id: '', // You need to get the user ID from your authentication system
@@ -8,13 +8,15 @@ const Favorite = () => {
   });
 
   useEffect(() => {
-    // Fetch all favorites
-    fetch('http://localhost:5555/favorite')
-      .then((response) => response.json())
-      .then((data) => setFavorites(data))
-      .catch((error) => console.error('Error fetching favorites:', error));
-  }, []); // The empty dependency array ensures this effect runs once when the component mounts
-
+    if (user) {
+      // Fetch user's favorite music based on userId
+      fetch(`http://localhost:5555/favorite/${user.id}`)  // Include the user ID in the request
+        .then((response) => response.json())
+        .then((data) => setFavorites(data))
+        .catch((error) => console.error('Error fetching favorites:', error));
+    }
+  }, [user]);
+  
   const handleAddFavorite = () => {
     // Make a POST request to add a new favorite
     fetch('http://localhost:5555/favorite', {
@@ -28,7 +30,7 @@ const Favorite = () => {
       .then((data) => {
         setFavorites([...favorites, data]);
         setNewFavorite({
-          user_id: '', // Reset the user ID or get it from your authentication system
+          user_id:  '', // Reset the user ID or get it from your authentication system
           music_id: '',
         });
       })

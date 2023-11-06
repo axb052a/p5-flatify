@@ -1,0 +1,26 @@
+
+.next-song-preview {
+    position: center;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .next-song-preview img {
+    max-width: 140px;
+    max-height: 140px;
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+  
+  .next-song-preview div {
+    flex: 1;
+  }
+  
+  .next-song-preview h3,
+  .next-song-preview h4,
+  .next-song-preview p {
+    margin: 0;
+  }
+  

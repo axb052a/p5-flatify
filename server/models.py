@@ -32,29 +32,21 @@ class User(db.Model, SerializerMixin):
 
     @validates('username', 'email')
     def validate_signup(self, key, value):
-        if not len(value) > 0:
-            raise ValueError(f"{key.capitalize()} must provide at least one character to sign up")
-        return value
+        if not (len(value) >= 3):  # Adjusted minimum character requirement to 3
+            raise ValueError(f"{key.capitalize()} must provide at least three characters to sign up")
 
+        # Check if the username or email already exists
+        existing_user = User.query.filter(db.or_(User.username == value, User.email == value)).first()
+        if existing_user:
+            raise ValueError(f"{key.capitalize()} already exists")
+
+        return value    
+    
     def __repr__(self):
         return f"User {self.username}, ID {self.id}"
 
     # Additional settings for serialization
     serialize_rules = ('-password_hash',)
-
-
-music_genre_association = db.Table(
-    'music_genre_association',
-    db.Column('music_id', db.Integer, db.ForeignKey('musics.id')),
-    db.Column('genre_id', db.Integer, db.ForeignKey('genres.id')),
-)
-
-playlist_music_association = db.Table(
-    'playlist_music_association',
-    db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id')),
-    db.Column('music_id', db.Integer, db.ForeignKey('musics.id')),
-)
-
 
 # Define Music model
 class Music(db.Model, SerializerMixin):
@@ -65,22 +57,27 @@ class Music(db.Model, SerializerMixin):
     artist = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
 
-    # Relationships
-    genres = db.relationship('Genre', secondary='music_genre_association', back_populates='musics')
-    playlists = db.relationship('Playlist', secondary='playlist_music_association', back_populates='musics')
-    favorites = db.relationship('Favorite', back_populates='music')
+   # One-to-Many relationship with Genre and Playlist
+    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'))
+    genre = db.relationship('Genre', back_populates='musics')
 
+    playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.id'))
+    playlist = db.relationship('Playlist', back_populates='musics')
+    
+    # Many-to-Many relationship with User through Favorite
+    favorites = db.relationship('Favorite', back_populates='music')
+    
     @validates('title', 'artist')
     def validate_music_fields(self, key, value):
-        if not len(value) > 0:
-            raise ValueError(f"{key.capitalize()} must provide at least one character")
+        if not (len(value) >= 3):
+            raise ValueError(f"{key.capitalize()} must provide at least five characters")
         return value
 
     def __repr__(self):
         return f"Music {self.title}, ID {self.id}"
 
     # Additional settings for serialization
-    serialize_rules = ('-genres', "-playlists", "-favorites")
+    serialize_rules = ('-genres', '-playlists', '-favorites')
 
 # Define Genre model
 class Genre(db.Model, SerializerMixin):
@@ -90,20 +87,19 @@ class Genre(db.Model, SerializerMixin):
     name = db.Column(db.String(50), nullable=False, unique=True)
     image = db.Column(db.String(255))
     
-    # Relationships
-    musics = db.relationship('Music', secondary='music_genre_association', back_populates='genres')
-
+    # One-to-Many relationship with Music
+    musics = db.relationship('Music', back_populates='genre')
 
     @validates('name')
-    def validate_genre_name(self, key, value):
-        if not len(value) > 0:
-            raise ValueError(f"{key.capitalize()} must provide at least one character")
-        return value
+    def validate_genre_name(self, key, name):
+        if not len(name) >= 3:
+            raise ValueError(f"Name must provide at least five characters")
+        return name
 
     def __repr__(self):
         return f"Genre {self.name}, ID {self.id}"
 
-    # Additional settings for serialization
+    # serialization
     serialize_rules = ('-musics',)
 
 # Define Playlist model
@@ -114,25 +110,24 @@ class Playlist(db.Model, SerializerMixin):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
     
-    # Relationships
-    musics = db.relationship('Music', secondary='playlist_music_association', back_populates='playlists')
- 
-     # Additional settings for serialization
+    # Many-to-Many relationship with Music
+    musics = db.relationship('Music', back_populates='playlist')
+    
+     # serialization
     serialize_rules = ('-musics',)
     
     @validates('name')
     def validate_playlist_name(self, key, value):
-        if not len(value) > 0:
-            raise ValueError(f"{key.capitalize()} must provide at least one character")
+        if not (len(value) >= 3):
+            raise ValueError(f"{key.capitalize()} must provide at least five characters")
         return value
 
     def __repr__(self):
         return f"Playlist {self.name}, ID {self.id}"
 
-#Define the Favorite Model
+# Favorite model
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
-
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     music_id = db.Column(db.Integer, db.ForeignKey('musics.id'), nullable=False)
@@ -141,8 +136,8 @@ class Favorite(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='favorites')
     music = db.relationship('Music', back_populates='favorites')
     
-     # Additional settings for serialization
-    serialize_rules = ('-music','-user')
-
+    # Serialization
+    serialize_rules = ('-user','-music')
+   
     def __repr__(self):
         return f"Favorite ID {self.id}"

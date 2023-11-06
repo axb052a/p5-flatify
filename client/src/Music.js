@@ -1,4 +1,3 @@
-// Music.js
 import React, { useState, useEffect } from 'react';
 import {
   Paper,
@@ -8,21 +7,41 @@ import {
   List,
   ListItem,
   ListItemText,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 
 const Music = ({ user }) => {
   const [musicList, setMusicList] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
   const [newMusicTitle, setNewMusicTitle] = useState('');
   const [newMusicArtist, setNewMusicArtist] = useState('');
   const [newMusicImage, setNewMusicImage] = useState('');
+  const [newMusicGenre, setNewMusicGenre] = useState('');
+  const [newMusicPlaylist, setNewMusicPlaylist] = useState('');
   const [selectedMusic, setSelectedMusic] = useState(null);
 
   useEffect(() => {
-    // Fetch music data
+    // Fetch music, genres, and playlists data
     fetch('http://localhost:5555/music')
       .then((response) => response.json())
       .then((data) => setMusicList(data))
       .catch((error) => console.error('Error fetching music:', error));
+
+    // Fetch genres data
+    fetch('http://localhost:5555/genre')
+      .then((response) => response.json())
+      .then((data) => setGenres(data))
+      .catch((error) => console.error('Error fetching genres:', error));
+
+    // Fetch playlists data
+    fetch('http://localhost:5555/playlist')
+      .then((response) => response.json())
+      .then((data) => setPlaylists(data))
+      .catch((error) => console.error('Error fetching playlists:', error));
   }, []);
 
   const handleCreateMusic = () => {
@@ -36,6 +55,8 @@ const Music = ({ user }) => {
         title: newMusicTitle,
         artist: newMusicArtist,
         image: newMusicImage,
+        genre_id: newMusicGenre,
+        playlist_id: newMusicPlaylist,
       }),
     })
       .then((response) => response.json())
@@ -44,6 +65,8 @@ const Music = ({ user }) => {
         setNewMusicTitle('');
         setNewMusicArtist('');
         setNewMusicImage('');
+        setNewMusicGenre('');
+        setNewMusicPlaylist('');
       })
       .catch((error) => console.error('Error creating music:', error));
   };
@@ -60,6 +83,8 @@ const Music = ({ user }) => {
           title: newMusicTitle,
           artist: newMusicArtist,
           image: newMusicImage,
+          genre_id: newMusicGenre,
+          playlist_id: newMusicPlaylist,
         }),
       })
         .then((response) => response.json())
@@ -68,37 +93,22 @@ const Music = ({ user }) => {
           setNewMusicTitle('');
           setNewMusicArtist('');
           setNewMusicImage('');
+          setNewMusicGenre('');
+          setNewMusicPlaylist('');
           setSelectedMusic(null);
         })
         .catch((error) => console.error('Error updating music:', error));
     }
   };
 
-  const handleDeleteMusic = (musicId) => {
-    console.log('Deleting music with ID:', musicId);
-  
-    // Implement logic to delete music
-    fetch(`http://localhost:5555/music/${musicId}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.status === 204) {
-          // Music deleted successfully, update the state to reflect the change
-          setMusicList(musicList.filter((music) => music.id !== musicId));
-        } else {
-          // Handle errors, e.g., music not found or other server errors
-          console.error('Error deleting music:', response.status);
-        }
-      })
-      .catch((error) => console.error('Error deleting music:', error));
-  };
-      
   const handleEditMusic = (music) => {
     // Set selected music for editing
-    setSelectedMusic(music);  // Keep the entire music object for consistency
+    setSelectedMusic(music);
     setNewMusicTitle(music.title);
     setNewMusicArtist(music.artist);
     setNewMusicImage(music.image);
+    setNewMusicGenre(music.genre ? music.genre.id : ''); // Set the initial genre value
+    setNewMusicPlaylist(music.playlist ? music.playlist.id : ''); // Set the initial playlist value
   };
 
   const handleFavoriteMusic = (musicId) => {
@@ -109,7 +119,7 @@ const Music = ({ user }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: user.id, // Assuming user object is available in the scope
+        user_id: user.id,
         music_id: musicId,
       }),
     })
@@ -141,6 +151,34 @@ const Music = ({ user }) => {
         value={newMusicImage}
         onChange={(e) => setNewMusicImage(e.target.value)}
       />
+      <FormControl variant="outlined" style={{ minWidth: '120px', marginRight: '10px' }}>
+        <InputLabel htmlFor="genre">Genre</InputLabel>
+        <Select
+          label="Genre"
+          value={newMusicGenre}
+          onChange={(e) => setNewMusicGenre(e.target.value)}
+        >
+          {genres.map((genre) => (
+            <MenuItem key={genre.id} value={genre.id}>
+              {genre.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl variant="outlined" style={{ minWidth: '120px' }}>
+        <InputLabel htmlFor="playlist">Playlist</InputLabel>
+        <Select
+          label="Playlist"
+          value={newMusicPlaylist}
+          onChange={(e) => setNewMusicPlaylist(e.target.value)}
+        >
+          {playlists.map((playlist) => (
+            <MenuItem key={playlist.id} value={playlist.id}>
+              {playlist.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <Button
         variant="contained"
         color="primary"
@@ -161,16 +199,11 @@ const Music = ({ user }) => {
               secondary={
                 <>
                   <div>{music.artist}</div>
+                  <div>{music.genre ? music.genre.name : 'No Genre'}</div>
+                  <div>{music.playlist ? music.playlist.name : 'No Playlist'}</div>
                 </>
               }
             />
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => handleDeleteMusic(music.id)}
-            >
-              Delete
-            </Button>
             <Button
               variant="outlined"
               color="primary"
