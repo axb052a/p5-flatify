@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
 
     @validates('username', 'email')
     def validate_signup(self, key, value):
-        if not (len(value) >= 3):  # Adjusted minimum character requirement to 3
+        if not (len(value) >= 3): 
             raise ValueError(f"{key.capitalize()} must provide at least three characters to sign up")
 
         # Check if the username or email already exists
@@ -45,7 +45,7 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f"User {self.username}, ID {self.id}"
 
-    # Additional settings for serialization
+    # Serialization
     serialize_rules = ('-password_hash',)
 
 # Define Music model
@@ -57,14 +57,13 @@ class Music(db.Model, SerializerMixin):
     artist = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
 
-   # One-to-Many relationship with Genre and Playlist
+   # Relationships
     genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'))
     genre = db.relationship('Genre', back_populates='musics')
 
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.id'))
     playlist = db.relationship('Playlist', back_populates='musics')
     
-    # Many-to-Many relationship with User through Favorite
     favorites = db.relationship('Favorite', back_populates='music')
     
     @validates('title', 'artist')
@@ -76,7 +75,7 @@ class Music(db.Model, SerializerMixin):
     def __repr__(self):
         return f"Music {self.title}, ID {self.id}"
 
-    # Additional settings for serialization
+    # Serialization
     serialize_rules = ('-genres', '-playlists', '-favorites')
 
 # Define Genre model
@@ -87,7 +86,7 @@ class Genre(db.Model, SerializerMixin):
     name = db.Column(db.String(50), nullable=False, unique=True)
     image = db.Column(db.String(255))
     
-    # One-to-Many relationship with Music
+    # Relationship
     musics = db.relationship('Music', back_populates='genre')
 
     @validates('name')
@@ -110,10 +109,10 @@ class Playlist(db.Model, SerializerMixin):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255))
     
-    # Many-to-Many relationship with Music
+    # Relationship
     musics = db.relationship('Music', back_populates='playlist')
     
-     # serialization
+     # Serialization
     serialize_rules = ('-musics',)
     
     @validates('name')

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, CardActions, Button, CardMedia, Paper } from '@mui/material';
+import { Card, CardContent, Typography, CardMedia, Paper } from '@mui/material';
 
-const MusicCard = ({ id, title, artist, image, genre, playlist, onFavorite }) => {
+const MusicCard = ({ id, title, artist, image, genre, playlist}) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => {
@@ -36,9 +36,6 @@ const MusicCard = ({ id, title, artist, image, genre, playlist, onFavorite }) =>
           <Typography variant="subtitle1">Genre: {genre ? genre.name : 'No Genre'}</Typography>
           <Typography variant="subtitle1">Playlist: {playlist ? playlist.name : 'No Playlist'}</Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small" onClick={onFavorite}>Favorite</Button>
-        </CardActions>
       </Paper>
     </Card>
   );

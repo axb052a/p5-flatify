@@ -8,12 +8,18 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
+import { useTheme } from './ThemeContext'; 
+import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
 
 const Playlist = () => {
   const [playlists, setPlaylists] = useState([]);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [newPlaylistImage, setNewPlaylistImage] = useState('');
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     // Fetch playlists data
@@ -86,7 +92,18 @@ const Playlist = () => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: '20px', margin: '20px' }}>
+    <Paper  elevation={3}
+    style={{
+      padding: '5px',
+      margin: '5px',
+      background: isDarkMode ? '#444444' : '#fff', 
+      color: isDarkMode ? '#F5F5DC' : '#333', 
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
+      <IconButton onClick={toggleTheme} color="primary">
+          {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+      </div>
       <Typography variant="h5" gutterBottom>
         Playlists
       </Typography>

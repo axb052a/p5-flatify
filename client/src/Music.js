@@ -12,6 +12,10 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
+import { useTheme } from './ThemeContext'; 
+import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const Music = ({ user }) => {
   const [musicList, setMusicList] = useState([]);
@@ -23,9 +27,10 @@ const Music = ({ user }) => {
   const [newMusicGenre, setNewMusicGenre] = useState('');
   const [newMusicPlaylist, setNewMusicPlaylist] = useState('');
   const [selectedMusic, setSelectedMusic] = useState(null);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
-    // Fetch music, genres, and playlists data
+    // Fetch music data
     fetch('http://localhost:5555/music')
       .then((response) => response.json())
       .then((data) => setMusicList(data))
@@ -107,8 +112,8 @@ const Music = ({ user }) => {
     setNewMusicTitle(music.title);
     setNewMusicArtist(music.artist);
     setNewMusicImage(music.image);
-    setNewMusicGenre(music.genre ? music.genre.id : ''); // Set the initial genre value
-    setNewMusicPlaylist(music.playlist ? music.playlist.id : ''); // Set the initial playlist value
+    setNewMusicGenre(music.genre ? music.genre.id : '');
+    setNewMusicPlaylist(music.playlist ? music.playlist.id : ''); 
   };
 
   const handleFavoriteMusic = (musicId) => {
@@ -129,7 +134,18 @@ const Music = ({ user }) => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: '20px', margin: '20px' }}>
+    <Paper  elevation={3}
+    style={{
+      padding: '5px',
+      margin: '5px',
+      background: isDarkMode ? '#444444' : '#fff', 
+      color: isDarkMode ? '#F5F5DC' : '#333', 
+    }}>
+     <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
+      <IconButton onClick={toggleTheme} color="primary">
+          {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+      </div>
       <Typography variant="h5" gutterBottom>
         Music
       </Typography>

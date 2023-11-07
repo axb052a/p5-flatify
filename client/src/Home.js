@@ -82,15 +82,15 @@ function Home({ user }) {
           {user ? (
             <>
               <Typography variant="body18" paragraph>
-                Flatify is a platform to find and explore songs in multiple genres and playlists. Explore the MusicCards to see a song associated with the artist.
+                Flatify is a platform to find and explore songs in multiple genres and playlists. Explore the Music Cards to see a song title associated with an artist, genre and playlist.
                 You could reference your{' '}
-                <NavLink to="/profile" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
-                  Profile
+                <NavLink to="/favorite" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                  Favorite
                 </NavLink>{' '}
                 to determine which songs you love. Listen to the songs in the {' '}
                 <NavLink to="/musicplayer" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
                   Music Player
-                </NavLink>{' '}.              
+                </NavLink>{' '} to determine which songs stand out to you.              
                 </Typography>
               <SearchBar onSearch={handleSearch} />
             </>

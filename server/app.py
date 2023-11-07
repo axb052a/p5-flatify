@@ -14,18 +14,10 @@ from config import app, db, api
 # Add your model imports
 from models import *
 
-class ClearSession(Resource):
-    def delete(self):
-        session['page_views'] = None
-        session['user_id'] = None
-        return {}, 204
-
 class Signup(Resource):
     def post(self):
-        # Get data from the request JSON
         data = request.get_json()
 
-        # Extract data from the request JSON
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
@@ -39,20 +31,15 @@ class Signup(Resource):
         if password != password_confirmation:
             return {"error": "Password and confirmation do not match"}, 400
 
-        # Create a new User instance
         new_user = User(username=username, email=email)
 
-        # Set the password hash for the user
         new_user.password_hash = password
 
-        # Add the new user to the database
         db.session.add(new_user)
         db.session.commit()
 
-        # Set the user_id in the session
         session["user_id"] = new_user.id
 
-        # Return the new user's data
         return new_user.to_dict()
 
 class Login(Resource):
@@ -111,7 +98,7 @@ class MusicResource(Resource):
         title = data.get("title")
         artist = data.get("artist")
         genres = data.get("genres", [])
-        image = data.get('image')  # Get the image URL from the request
+        image = data.get('image')
 
         if not (title and artist):
             return make_response({"error": "Title and artist are required"}, 400)
@@ -165,7 +152,7 @@ class GenreResource(Resource):
         data = request.get_json()
 
         name = data.get("name")
-        image = data.get('image')  # Get the image URL from the request
+        image = data.get('image')  
 
         if not name:
             return make_response({"error": "Name is required"}, 400)
@@ -186,15 +173,15 @@ class GenreResource(Resource):
 
         # Update genre fields
         genre.name = data.get("name", genre.name)
-        genre.image = data.get('image', genre.image)  # Update the image URL
+        genre.image = data.get('image', genre.image) 
 
         db.session.commit()
 
         # Update associated music entries
         for music in genre.musics:
-            music.title = data.get("music_title", music.title)  # Update music title if provided
-            music.artist = data.get("music_artist", music.artist)  # Update music artist if provided
-            music.image = data.get("music_image", music.image)  # Update music image if provided
+            music.title = data.get("music_title", music.title)  
+            music.artist = data.get("music_artist", music.artist)  
+            music.image = data.get("music_image", music.image) 
 
         db.session.commit()
 
@@ -226,7 +213,7 @@ class PlaylistResource(Resource):
 
         name = data.get("name")
         musics = data.get("musics", [])
-        image = data.get('image')  # Get the image URL from the request
+        image = data.get('image')  
 
         if not name:
             return make_response({"error": "Name is required"}, 400)
@@ -253,15 +240,15 @@ class PlaylistResource(Resource):
 
         # Update playlist fields
         playlist.name = data.get("name", playlist.name)
-        playlist.image = data.get('image', playlist.image)  # Update the image URL
+        playlist.image = data.get('image', playlist.image)  
 
         db.session.commit()
 
         # Update associated music entries
         for music in playlist.musics:
-            music.title = data.get("music_title", music.title)  # Update music title if provided
-            music.artist = data.get("music_artist", music.artist)  # Update music artist if provided
-            music.image = data.get("music_image", music.image)  # Update music image if provided
+            music.title = data.get("music_title", music.title)  
+            music.artist = data.get("music_artist", music.artist)  
+            music.image = data.get("music_image", music.image)  
 
         db.session.commit()
         
@@ -286,16 +273,32 @@ class FavoriteResource(Resource):
             return make_response({"error": "User not found"}, 404)
 
         favorites = Favorite.query.filter_by(user_id=user_id).all()
-        return make_response([favorite.music.to_dict() for favorite in favorites], 200)
+        response_data = [
+            {
+                'favorite_id': favorite.id,
+                'user': favorite.user.to_dict(), 
+                'music': favorite.music.to_dict(),  
+            }
+            for favorite in favorites
+        ]
+        return make_response(response_data, 200)
 
     def post(self):
         data = request.get_json()
 
-        user_id = session.get("user_id")  # Get the user ID from the session
+        user_id = session.get("user_id") 
         music_id = data.get("music_id")
 
         if not user_id or not music_id:
             return make_response({"error": "User and music ID are required"}, 400)
+
+        user = User.query.get(user_id)
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+
+        music = Music.query.get(music_id)
+        if not music:
+            return make_response({"error": "Music not found"}, 404)
 
         new_favorite = Favorite(
             user_id=user_id,
@@ -305,7 +308,11 @@ class FavoriteResource(Resource):
         db.session.add(new_favorite)
         db.session.commit()
 
-        return make_response(jsonify(new_favorite.to_dict()), 201)
+        return make_response(jsonify({
+            'favorite_id': new_favorite.id,
+            'user': new_favorite.user.to_dict(), 
+            'music': new_favorite.music.to_dict(),  
+        }), 201)
 
     def delete(self, favorite_id):
         favorite = Favorite.query.get(favorite_id)
@@ -316,8 +323,7 @@ class FavoriteResource(Resource):
         db.session.commit()
 
         return make_response({"message": "Favorite deleted successfully"}, 204)
-
-
+    
 # Add routes to the API
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
@@ -326,7 +332,7 @@ api.add_resource(Logout, "/logout")
 api.add_resource(MusicResource, "/music", "/music/<int:music_id>")
 api.add_resource(GenreResource, "/genre", "/genre/<int:genre_id>")
 api.add_resource(PlaylistResource, "/playlist", "/playlist/<int:playlist_id>")
-api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:user_id>")
+api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:favorite_id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

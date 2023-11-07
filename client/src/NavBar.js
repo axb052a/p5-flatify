@@ -55,7 +55,7 @@ function NavBar({ user, setUser }) {
               Search
             </Button>
             <Button color="inherit" component={NavLink} to="/musicplayer">
-              Music PLayer
+              Music Player
             </Button>
             <Button color="inherit" component={NavLink} to="/music">
               Music
@@ -93,7 +93,6 @@ function NavBar({ user, setUser }) {
           </Box>
         )}
         {user ? (
-          // Omitted dark mode toggle for simplicity
           null
         ) : (
           <>

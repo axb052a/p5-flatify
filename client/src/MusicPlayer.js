@@ -1,4 +1,3 @@
-// MusicPlayer.js
 import React, { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import Controls from './Controls';
@@ -52,7 +51,7 @@ const MusicPlayer = ({ musicList }) => {
   const nextSong = musicList[nextSongIndex];
 
   return (
-    <Container className="music-player-container">
+    <Container className={`music-player-container`}>
       <Card className="song-info">
         <CardMedia
           component="img"
@@ -61,8 +60,12 @@ const MusicPlayer = ({ musicList }) => {
           image={musicList[currentSongIndex].image}
         />
         <CardContent>
-          <Typography variant="h5">{musicList[currentSongIndex].title}</Typography>
-          <Typography variant="subtitle1">{musicList[currentSongIndex].artist}</Typography>
+          <Typography variant="h5">
+            {musicList[currentSongIndex].title}
+          </Typography>
+          <Typography variant="subtitle1">
+            {musicList[currentSongIndex].artist}
+          </Typography>
         </CardContent>
       </Card>
       <ReactPlayer

@@ -33,14 +33,14 @@ if __name__ == '__main__':
         for user_data in user_list:
             user = User(username=user_data["username"], email=user_data["email"])
 
-            # Hash the password using bcrypt
+            
             password = user_data["password"].encode("utf-8")
             password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
             user._password_hash = password_hash
             db.session.add(user)
 
-        # Commit the changes
+       
         db.session.commit()
         print("Users seeded successfully.")
     
@@ -144,9 +144,9 @@ if __name__ == '__main__':
             # Seeded Favorite data
             favorite_list = [
                 {"user": "Jane", "musics": ["About You", "Days", "Anti-Hero", "Dreaming", "Electric Feel", "Heartbeat", "Under the Bridge", "Midnight City"]},
-                {"user": "Joe", "musics": ["Sweater Weather", "Take a Walk", "Shut Up and Dance", "Ho Hey", "Baby Blue"]},
+                {"user": "Joe", "musics": ["Sweater Weather", "Take a Walk", "Shut Up and Dance","Ocean Eyes", "Ho Hey", "Baby Blue"]},
                 {"user": "Alice", "musics": ["About You", "Under the Bridge", "Midnight City", "Dog Days Are Over", "Radio"]},
-                {"user": "Bob", "musics": ["Ocean Eyes", "Some Nights", "Stressed Out", "Should Have Known Better"]},
+                {"user": "Bob", "musics": ["Ocean Eyes", "Some Nights","Anti-Hero", "Stressed Out", "Should Have Known Better"]},
                 {"user": "Charlie", "musics": ["Electric Feel", "Heartbeat", "Under the Bridge", "Midnight City", "Dog Days Are Over", "Sweater Weather"]},
                 {"user": "David", "musics": ["About You", "Days", "Anti-Hero", "To Me", "Jupiter", "MONACO"]},
                 {"user": "Eva", "musics": ["About You", "Midnight City", 'Still Dreaming', "Dog Days Are Over", "Sweater Weather", "Take a Walk"]}

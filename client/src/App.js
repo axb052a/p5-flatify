@@ -1,6 +1,7 @@
 // App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
+import { useTheme } from './ThemeContext';
 import Home from './Home';
 import SearchPage from './SearchPage';
 import Login from './Login';
@@ -17,23 +18,24 @@ import musicList from './musicData';
 
 function App() {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Fetch user information when the app starts
-    fetchUser();
-  }, []);
+  const { isDarkMode } = useTheme();
 
   const fetchUser = () =>
-    fetch('http://localhost:5555/check_session').then((r) => {
-      if (r.ok) {
-        r.json().then((userData) => {
-          setUser(userData);
-        });
-      }
-    });
+  fetch('http://localhost:5555/check_session', {
+    method: 'GET',
+    credentials: 'include',
+  })
+  .then((r) => {
+    if (r.ok) {
+      r.json().then((userData) => {
+        setUser(userData);
+      });
+    }
+  });
 
   return (
     <Router>
+      <div className={isDarkMode ? 'dark-theme' : 'light-theme'}></div>
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route
