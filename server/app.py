@@ -264,66 +264,6 @@ class PlaylistResource(Resource):
 
         return make_response({"message": "Playlist deleted successfully"}, 204)
 
-class FavoriteResource(Resource):
-    def get(self, user_id=None):
-        if not user_id:
-            user_id = session.get("user_id")
-        user = User.query.get(user_id)
-        if not user:
-            return make_response({"error": "User not found"}, 404)
-
-        favorites = Favorite.query.filter_by(user_id=user_id).all()
-        response_data = [
-            {
-                'favorite_id': favorite.id,
-                'user': favorite.user.to_dict(), 
-                'music': favorite.music.to_dict(),  
-            }
-            for favorite in favorites
-        ]
-        return make_response(response_data, 200)
-
-    def post(self):
-        data = request.get_json()
-
-        user_id = session.get("user_id") 
-        music_id = data.get("music_id")
-
-        if not user_id or not music_id:
-            return make_response({"error": "User and music ID are required"}, 400)
-
-        user = User.query.get(user_id)
-        if not user:
-            return make_response({"error": "User not found"}, 404)
-
-        music = Music.query.get(music_id)
-        if not music:
-            return make_response({"error": "Music not found"}, 404)
-
-        new_favorite = Favorite(
-            user_id=user_id,
-            music_id=music_id,
-        )
-
-        db.session.add(new_favorite)
-        db.session.commit()
-
-        return make_response(jsonify({
-            'favorite_id': new_favorite.id,
-            'user': new_favorite.user.to_dict(), 
-            'music': new_favorite.music.to_dict(),  
-        }), 201)
-
-    def delete(self, favorite_id):
-        favorite = Favorite.query.get(favorite_id)
-        if not favorite:
-            return make_response({"error": "Favorite not found"}, 404)
-
-        db.session.delete(favorite)
-        db.session.commit()
-
-        return make_response({"message": "Favorite deleted successfully"}, 204)
-    
 # Add routes to the API
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
@@ -332,7 +272,6 @@ api.add_resource(Logout, "/logout")
 api.add_resource(MusicResource, "/music", "/music/<int:music_id>")
 api.add_resource(GenreResource, "/genre", "/genre/<int:genre_id>")
 api.add_resource(PlaylistResource, "/playlist", "/playlist/<int:playlist_id>")
-api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:favorite_id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

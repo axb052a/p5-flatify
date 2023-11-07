@@ -13,9 +13,6 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
     email = db.Column(db.String(120), unique=True, nullable=False)
     
-    # Relationship
-    favorites = db.relationship('Favorite', back_populates='user')
-
     @hybrid_property
     def password_hash(self):
         raise Exception('Password hashes may not be viewed.')
@@ -63,9 +60,7 @@ class Music(db.Model, SerializerMixin):
 
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.id'))
     playlist = db.relationship('Playlist', back_populates='musics')
-    
-    favorites = db.relationship('Favorite', back_populates='music')
-    
+        
     @validates('title', 'artist')
     def validate_music_fields(self, key, value):
         if not (len(value) >= 3):
@@ -123,20 +118,3 @@ class Playlist(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"Playlist {self.name}, ID {self.id}"
-
-# Favorite model
-class Favorite(db.Model, SerializerMixin):
-    __tablename__ = 'favorites'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    music_id = db.Column(db.Integer, db.ForeignKey('musics.id'), nullable=False)
-
-    # Relationships
-    user = db.relationship('User', back_populates='favorites')
-    music = db.relationship('Music', back_populates='favorites')
-    
-    # Serialization
-    serialize_rules = ('-user','-music')
-   
-    def __repr__(self):
-        return f"Favorite ID {self.id}"

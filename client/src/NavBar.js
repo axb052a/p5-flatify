@@ -66,9 +66,6 @@ function NavBar({ user, setUser }) {
             <Button color="inherit" component={NavLink} to="/playlist">
               Playlist
             </Button>
-            <Button color="inherit" component={NavLink} to="/favorite">
-              Favorite
-            </Button>
             <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>

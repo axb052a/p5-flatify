@@ -141,31 +141,3 @@ if __name__ == '__main__':
             db.session.commit()
             print("Playlists seeded successfully.")
     
-            # Seeded Favorite data
-            favorite_list = [
-                {"user": "Jane", "musics": ["About You", "Days", "Anti-Hero", "Dreaming", "Electric Feel", "Heartbeat", "Under the Bridge", "Midnight City"]},
-                {"user": "Joe", "musics": ["Sweater Weather", "Take a Walk", "Shut Up and Dance","Ocean Eyes", "Ho Hey", "Baby Blue"]},
-                {"user": "Alice", "musics": ["About You", "Under the Bridge", "Midnight City", "Dog Days Are Over", "Radio"]},
-                {"user": "Bob", "musics": ["Ocean Eyes", "Some Nights","Anti-Hero", "Stressed Out", "Should Have Known Better"]},
-                {"user": "Charlie", "musics": ["Electric Feel", "Heartbeat", "Under the Bridge", "Midnight City", "Dog Days Are Over", "Sweater Weather"]},
-                {"user": "David", "musics": ["About You", "Days", "Anti-Hero", "To Me", "Jupiter", "MONACO"]},
-                {"user": "Eva", "musics": ["About You", "Midnight City", 'Still Dreaming', "Dog Days Are Over", "Sweater Weather", "Take a Walk"]}
-            ]
-
-            for favorite_data in favorite_list:
-                # Find the user by username
-                user = User.query.filter_by(username=favorite_data["user"]).first()
-                if user:
-                    # Find the musics by title
-                    musics = Music.query.filter(Music.title.in_(favorite_data["musics"])).all()
-                    
-                    # Create Favorite instances and associate them with the user and musics
-                    for music in musics:
-                        favorite = Favorite(
-                            user=user, 
-                            music=music)
-                        db.session.add(favorite)
-
-            db.session.commit()
-            print("Favorites seeded successfully.")
-

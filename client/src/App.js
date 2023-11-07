@@ -12,7 +12,6 @@ import UserProfile from './UserProfile';
 import Genre from './Genre';
 import Playlist from './Playlist';
 import Music from './Music';
-import Favorite from './Favorite';
 import MusicPlayer from './MusicPlayer';
 import musicList from './musicData';
 
@@ -58,7 +57,6 @@ function App() {
             <Route path="/playlist" element={<Playlist />} />
             <Route path="/music" element={<Music />} />
             <Route path="/musicplayer" element={<MusicPlayer musicList={musicList}/>} />
-            <Route path="/favorite" element={<Favorite user={user}/>} />
           </>
         )}
         <Route path="/search" element={<SearchPage user={user} />} />
