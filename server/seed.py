@@ -140,4 +140,3 @@ if __name__ == '__main__':
             db.session.add(playlist)
             db.session.commit()
             print("Playlists seeded successfully.")
-    

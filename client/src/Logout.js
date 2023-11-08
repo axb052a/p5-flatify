@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
-export default function Logout({ setUser }) {
+const Logout = ({ setUser }) => {
   const navigate = useNavigate();
 
   function handleLogOut() {
@@ -19,3 +19,5 @@ export default function Logout({ setUser }) {
 
   return <Button variant="contained" color="secondary" onClick={handleLogOut}>Logout</Button>;
 }
+
+export default Logout;

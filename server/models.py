@@ -12,6 +12,9 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String(120), unique=True, nullable=False)
+        
+    # Serialization
+    serialize_rules = ('-password_hash',)
     
     @hybrid_property
     def password_hash(self):
@@ -30,20 +33,19 @@ class User(db.Model, SerializerMixin):
     @validates('username', 'email')
     def validate_signup(self, key, value):
         if not (len(value) >= 3): 
-            raise ValueError(f"{key.capitalize()} must provide at least three characters to sign up")
+            raise ValueError("User or Email must provide at least three characters to sign up.")
 
         # Check if the username or email already exists
         existing_user = User.query.filter(db.or_(User.username == value, User.email == value)).first()
         if existing_user:
-            raise ValueError(f"{key.capitalize()} already exists")
+            raise ValueError(" User already exists.")
 
         return value    
     
     def __repr__(self):
         return f"User {self.username}, ID {self.id}"
 
-    # Serialization
-    serialize_rules = ('-password_hash',)
+    
 
 # Define Music model
 class Music(db.Model, SerializerMixin):
@@ -60,18 +62,18 @@ class Music(db.Model, SerializerMixin):
 
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.id'))
     playlist = db.relationship('Playlist', back_populates='musics')
-        
+            
     @validates('title', 'artist')
     def validate_music_fields(self, key, value):
         if not (len(value) >= 3):
-            raise ValueError(f"{key.capitalize()} must provide at least five characters")
+            raise ValueError("Title or Artist must provide at least five characters")
         return value
 
     def __repr__(self):
         return f"Music {self.title}, ID {self.id}"
 
     # Serialization
-    serialize_rules = ('-genres', '-playlists', '-favorites')
+    serialize_rules = ('-genres', '-playlists')
 
 # Define Genre model
 class Genre(db.Model, SerializerMixin):
@@ -87,7 +89,7 @@ class Genre(db.Model, SerializerMixin):
     @validates('name')
     def validate_genre_name(self, key, name):
         if not len(name) >= 3:
-            raise ValueError(f"Name must provide at least five characters")
+            raise ValueError("Name must provide at least five characters")
         return name
 
     def __repr__(self):
@@ -113,8 +115,9 @@ class Playlist(db.Model, SerializerMixin):
     @validates('name')
     def validate_playlist_name(self, key, value):
         if not (len(value) >= 3):
-            raise ValueError(f"{key.capitalize()} must provide at least five characters")
+            raise ValueError("Name must provide at least five characters")
         return value
 
     def __repr__(self):
         return f"Playlist {self.name}, ID {self.id}"
+    
