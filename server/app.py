@@ -42,16 +42,27 @@ class Signup(Resource):
 
 class Login(Resource):
     def post(self):
-        username = request.get_json()["username"]
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+
+        # Check if username and password are present
+        if not (username and password):
+            return {"error": "Username and password are required"}, 400
+
         user = User.query.filter(User.username == username).first()
 
-        password = request.get_json()["password"]
-        if user.authenticate(password):
-            session["user_id"] = user.id
-            print(f"Debug: User ID set in session: {session['user_id']}")
-            return user.to_dict(rules=("_password_hash",))
-
-        return {"error": "Invalid username or password"}, 401
+        # Check if user exists
+        if user:
+            # Check if the password is correct
+            if user.authenticate(password):
+                session["user_id"] = user.id
+                print(f"Debug: User ID set in session: {session['user_id']}")
+                return user.to_dict(rules=("_password_hash",))
+            else:
+                return {"error": "Invalid username or password"}, 401
+        else:
+            return {"error": "User not found"}, 401
 
 class CheckSession(Resource):
     def get(self):

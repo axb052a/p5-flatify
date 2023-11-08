@@ -40,13 +40,13 @@ const Login = ({ setUser }) => {
             });
           } else {
             response.json().then((data) => {
-              formik.setErrors(data.errors || { _error: 'An error occurred during login.' });
+              formik.setErrors(data.errors || { _error: 'User or password is incorrect. Please try again.' });
             });
           }
         })
         .catch((error) => {
           console.error('Error during login:', error);
-          formik.setErrors({ _error: 'An error occurred during login.' });
+          formik.setErrors({ _error: 'User or password is incorrect. Please try again.' });
         });
     },
   });
