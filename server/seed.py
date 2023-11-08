@@ -72,9 +72,28 @@ if __name__ == '__main__':
             {"title": "MONACO", "artist": "Bad Bunny", "image": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/13/21/22/132122a1-2ef2-381b-94b6-7b9449dcaa4a/197190137897.jpg/1200x1200bf-60.jpg"},
             {"title": "Radio", "artist": "Lana Del Rey", "image": "https://i.scdn.co/image/ab67616d0000b273f894be72a77b1488292672c7"}, 
             {"title": "Baby Blue", "artist": "King Krule", "image": "https://f4.bcbits.com/img/a2247132523_65"},
+            {'title': 'One Of Your Girls', 'artist': 'Troye Sivan', "image":'https://i.scdn.co/image/ab67616d0000b27367103283a4eb57578a428252'},
+            {'title': 'Mystery', 'artist': 'Turnstile', "image":'https://i.scdn.co/image/ab67616d0000b273a4499cf37a6fe4ff043dc9f2'},
+            {'title': 'Charcoal Baby', 'artist': 'Blood Orange', "image":'https://i.scdn.co/image/ab67616d0000b27347dd2ca47ec9bf14559e17c6'},
+            {'title': 'Best to You', 'artist': 'Blood Orange', "image":'https://i.scdn.co/image/ab67616d0000b273706a733634175d413dedfe54'},
+            {'title': 'Thinkin Bout You', 'artist': 'Frank Ocean', "image":'https://i.scdn.co/image/ab67616d0000b2737aede4855f6d0d738012e2e5'},
+            {'title': 'Save Your Tears', 'artist': 'The Weeknd ft Ariana Grande', "image":'https://i.scdn.co/image/ab67706c0000da84f834855248f03733216361e6'},
+            {'title': 'Melting', 'artist': 'Kali Uchis', "image":'https://i.scdn.co/image/ab67616d0000b273dbc47f8bae404ce15ffd055e'},
+            {'title': 'Innerbloom', 'artist': 'Rüfüs Du Sol', 'image': 'https://i.scdn.co/image/ab67616d0000b273d7d354b5ee37f62c88e392d9'},
+            {'title': 'Shelter', 'artist': 'Porter Robinson ft Madeon', "image":'https://i.scdn.co/image/ab67616d0000b2730b4df34612f851b639959f9a'},
+            {'title': 'Jungle', 'artist': 'fred again', "image":'https://i.scdn.co/image/ab67616d0000b273e88a1b90870837f8f376457a'},
+            {'title': 'Snooze', 'artist': 'SZA', "image":'https://i.scdn.co/image/ab67706c0000da84a931a09057817e5122ee5c58'},
+            {'title': 'Frozen', 'artist': 'Sabrina Claudio', "image":'https://i.scdn.co/image/ab67616d0000b27376165991d7aeecce3634f554'},
+            {'title': 'Can I Kick It?', 'artist': 'A Tribe Called Quest', "image":'https://i.scdn.co/image/ab67616d0000b2734ba1fe238a517021ebcc2ace'},
+            {'title': 'Super Bass', 'artist': 'Nicki Minaj', "image":'https://i.scdn.co/image/ab67616d0000b27370b8b4f85ef33b4d81bcaea6'},
+            {'title': 'Golden Hour', 'artist': 'Kacey Musgraves', "image":'https://i.scdn.co/image/ab67616d0000b2732e35d25eb7288830d5540484'},
+            {'title': 'I Remember Everything', 'artist': 'Zach Bryan ft Kacey Musgraves', "image":'https://i.scdn.co/image/ab67616d0000b273e5a25ed08d1e7e0fbb440cef'},
+            {'title': 'Bruises Off The Peach', 'artist': 'Ryan Beatty', "image":'https://i.scdn.co/image/ab67616d0000b27389bcf0e9d8e14d33dea77acf'},
+            {'title': 'Real Love Baby', 'artist': 'Father John Misty', "image":'https://i.scdn.co/image/ab67616d0000b273c6ad8b49ea263f4bd2ad57eb'},
+            {'title': 'MOTOMAMI', 'artist': 'Rosalía', "image":'https://i.scdn.co/image/ab67616d0000b2730c179967a265de0fc76382fe'},
+            {'title': 'LA CANCIÓN', 'artist': 'J Balvin ft Bad Bunny', "image":'https://i.scdn.co/image/ab67616d0000b2734891d9b25d8919448388f3bb'},
         ]
         
-
         musics = [Music(
             title=music["title"],
             artist=music["artist"],
@@ -87,15 +106,15 @@ if __name__ == '__main__':
         # Seed for Genres
 
         genre_list = [
-            {"name": "R&B", "musics": [ "To Me"], "image": "https://i.pinimg.com/originals/b7/54/6b/b7546bca6cbf4fe7f474d213bb9c6a28.jpg"},
-            {"name": "Indie", "musics": ['Days', 'Dreaming', "Radio", "Baby Blue", "Still Dreaming", 'Under the Bridge', 'Ho Hey', 'Walking on a Dream', "Jupiter", 'I Will Wait', 'Some Nights'], "image": "https://i.pinimg.com/564x/70/bf/ec/70bfec9fc7ccc14d2412b0f99dbbbd53.jpg"},
-            {"name": "Pop", "musics": ['About You', 'Anti-Hero', 'Take a Walk', 'Shut Up and Dance', 'Ocean Eyes'], "image": "https://i.pinimg.com/736x/5b/e7/3d/5be73dafdf15eb39a98eabb12eaf6c79.jpg"},
-            {"name": "Electronic", "musics": ['Electric Feel', 'Midnight City'], "image": "https://edm.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTUzMTcwODc2NzA2MDcxNTU5/festival-image.jpg"},
-            {"name": "Hip Hop", "musics": ["Heartbeat"], "image": "https://img.freepik.com/premium-vector/hip-hop-tag-graffiti-style-label-lettering_204219-49.jpg?w=2000"},
-            {"name": "Alternative", "musics": ['Dog Days Are Over', 'Sweater Weather', 'Stressed Out'], "image": "https://cdn.pnghd.pics/data/667/indie-tumblr-24.png"},
-            {"name": "Country", "musics": ['I Will Wait'], "image": "https://i.pinimg.com/736x/3a/52/42/3a524276efcbd286f289ec2f8034b355.jpg"},
-            {"name": "Folk", "musics": ['Should Have Known Better'], "image": "https://maxkomusic.com/wp-content/uploads/2017/05/Folk_Acoustic2.jpg"},
-            {"name": "Reggaeton", "musics": ['MONACO'], "image": "https://cdn.dribbble.com/users/1290912/screenshots/20298308/media/eced1dfc1f9cc79827c5cad4a5a9c32e.png?resize=400x0"},
+            {"name": "R&B", "musics": ["To Me", "Save Your Tears", "Thinkin Bout You", 'Snooze', 'Frozen'], "image": "https://i.pinimg.com/originals/b7/54/6b/b7546bca6cbf4fe7f474d213bb9c6a28.jpg"},
+            {"name": "Indie", "musics": ['Days', 'Charcoal Baby', 'Melting', 'Best to You', 'Dreaming', "Radio", "Baby Blue", "Still Dreaming", 'Under the Bridge', 'Ho Hey', 'Walking on a Dream', "Jupiter", 'I Will Wait', 'Some Nights'], "image": "https://i.pinimg.com/564x/70/bf/ec/70bfec9fc7ccc14d2412b0f99dbbbd53.jpg"},
+            {"name": "Pop", "musics": ['About You', 'One Of Your Girls', 'Anti-Hero', 'Take a Walk', 'Shut Up and Dance', 'Ocean Eyes'], "image": "https://i.pinimg.com/736x/5b/e7/3d/5be73dafdf15eb39a98eabb12eaf6c79.jpg"},
+            {"name": "Electronic", "musics": ['Electric Feel', 'Midnight City', "Shelter", 'Jungle', 'Innerbloom'], "image": "https://edm.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTUzMTcwODc2NzA2MDcxNTU5/festival-image.jpg"},
+            {"name": "Hip Hop", "musics": ["Heartbeat", "Can I Kick It?", "Super Bass"], "image": "https://img.freepik.com/premium-vector/hip-hop-tag-graffiti-style-label-lettering_204219-49.jpg?w=2000"},
+            {"name": "Alternative", "musics": ['Dog Days Are Over', 'Mystery', 'Sweater Weather', 'Stressed Out'], "image": "https://cdn.pnghd.pics/data/667/indie-tumblr-24.png"},
+            {"name": "Country", "musics": ['I Will Wait', "Golden Hour", "I Remember Everything"], "image": "https://i.pinimg.com/736x/3a/52/42/3a524276efcbd286f289ec2f8034b355.jpg"},
+            {"name": "Folk", "musics": ['Should Have Known Better', 'Bruises Off The Peach', 'Real Love Baby'], "image": "https://maxkomusic.com/wp-content/uploads/2017/05/Folk_Acoustic2.jpg"},
+            {"name": "Reggaeton", "musics": ['MONACO', 'MOTOMAMI', 'LA CANCIÓN' ], "image": "https://cdn.dribbble.com/users/1290912/screenshots/20298308/media/eced1dfc1f9cc79827c5cad4a5a9c32e.png?resize=400x0"},
         ]
         
         for genre_data in genre_list:
@@ -117,12 +136,12 @@ if __name__ == '__main__':
         # Seed for Playlists
 
         playlist_list = [
-            {"name": "Nostalgia", "musics": ['About You', 'Days', 'Anti-Hero', 'Should Have Known Better'], "image": "https://i.pinimg.com/originals/6b/77/6d/6b776d376dcf508ac7249c8309c02999.jpg"}, 
-            {"name": "In My Feels", "musics": ['Dreaming', 'Electric Feel', "To Me", "Jupiter", 'Baby Blue', 'Heartbeat'], "image": "https://pm1.aminoapps.com/6696/592909d0be489390a30e8e2544ca86d53dbc7753_hq.jpg"},
-            {"name": "Road Trip", "musics": ['Under the Bridge', 'Midnight City', 'Radio', 'Dog Days Are Over'], "image": "https://i.ytimg.com/vi/O4N4MMIfnW0/maxresdefault.jpg"},
-            {"name": "Chill Vibes", "musics": ['Sweater Weather', 'Take a Walk', 'Shut Up and Dance'], "image": "https://i.pinimg.com/564x/f5/31/be/f531be33d92a1431d5b274e65eae3a52.jpg"},
-            {"name": "Workout Beats", "musics": ['Ho Hey', 'Walking on a Dream', "MONACO", 'I Will Wait'], "image": "https://i.pinimg.com/originals/e4/a7/20/e4a7206b019cc7b43b1522f39afded6a.png"},
-            {"name": "Study Session", "musics": ['Ocean Eyes', 'Some Nights', 'Still Dreaming', 'Stressed Out'], "image": "https://i.pinimg.com/564x/c9/83/7a/c9837afb7fed53871e45422d4266492e.jpg"},  
+            {"name": "Nostalgia", "musics": ['About You', 'Days', 'Anti-Hero', 'Golden Hour', 'Save Your Tears', 'Frozen', 'Should Have Known Better'], "image": "https://i.pinimg.com/originals/6b/77/6d/6b776d376dcf508ac7249c8309c02999.jpg"}, 
+            {"name": "In My Feels", "musics": ['Dreaming', 'Electric Feel', 'I Remember Everything', 'One Of Your Girls', 'LA CANCIÓN', 'Thinkin Bout You', "To Me", 'Melting', 'Shelter', "Jupiter", 'Snooze', 'Baby Blue', 'Heartbeat'], "image": "https://pm1.aminoapps.com/6696/592909d0be489390a30e8e2544ca86d53dbc7753_hq.jpg"},
+            {"name": "Road Trip", "musics": ['Under the Bridge', 'Midnight City', 'Super Bass', 'Real Love Baby', 'Radio', 'Charcoal Baby', 'Dog Days Are Over'], "image": "https://i.ytimg.com/vi/O4N4MMIfnW0/maxresdefault.jpg"},
+            {"name": "Chill Vibes", "musics": ['Sweater Weather', 'Take a Walk', 'Best to You', 'Can I Kick It?', 'Shut Up and Dance'], "image": "https://i.pinimg.com/564x/f5/31/be/f531be33d92a1431d5b274e65eae3a52.jpg"},
+            {"name": "Workout Beats", "musics": ['Ho Hey', 'Walking on a Dream', 'MOTOMAMI', 'Jungle', 'Mystery', "MONACO", 'I Will Wait'], "image": "https://i.pinimg.com/originals/e4/a7/20/e4a7206b019cc7b43b1522f39afded6a.png"},
+            {"name": "Study Session", "musics": ['Ocean Eyes', 'Some Nights', 'Innerbloom', 'Bruises Off The Peach', 'Still Dreaming', 'Stressed Out'], "image": "https://i.pinimg.com/564x/c9/83/7a/c9837afb7fed53871e45422d4266492e.jpg"},  
         ]
 
         for playlist_data in playlist_list:
