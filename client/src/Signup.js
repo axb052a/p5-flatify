@@ -16,7 +16,7 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Client-side validation
+    // Validation for user, email, password and password confirmation
     if (!username || !email || !password || !passwordConfirmation) {
       setError('All fields are required');
       return;
@@ -33,7 +33,7 @@ function SignUp() {
       return;
     }
 
-    // Continue with API call
+    // Fetch request
     fetch('http://localhost:5555/signup', {
       method: 'POST',
       headers: {

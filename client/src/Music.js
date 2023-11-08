@@ -50,7 +50,14 @@ const Music = ({ user }) => {
   }, []);
 
   const handleCreateMusic = () => {
-    // Implement logic to create a new music
+
+    // Check for empty inputs
+    if (!newMusicTitle || !newMusicArtist || !newMusicImage || !newMusicGenre || !newMusicPlaylist) {
+      console.error('Please provide values for title, artist, image, genre, and playlist.');
+      return;
+    }
+
+    // To create a new music
     fetch('http://localhost:5555/music', {
       method: 'POST',
       headers: {
@@ -77,7 +84,7 @@ const Music = ({ user }) => {
   };
 
   const handleUpdateMusic = () => {
-    // Implement logic to update selected music
+    // To update selected music
     if (selectedMusic) {
       fetch(`http://localhost:5555/music/${selectedMusic.id}`, {
         method: 'PUT',
@@ -107,7 +114,7 @@ const Music = ({ user }) => {
   };
 
   const handleEditMusic = (music) => {
-    // Set selected music for editing
+    // To set music for editing
     setSelectedMusic(music);
     setNewMusicTitle(music.title);
     setNewMusicArtist(music.artist);
@@ -117,7 +124,7 @@ const Music = ({ user }) => {
   };
 
   const handleFavoriteMusic = (musicId) => {
-    // Implement logic to mark a music item as a favorite
+    // To mark a music item as a favorite
     fetch('http://localhost:5555/favorite', {
       method: 'POST',
       headers: {

@@ -45,8 +45,6 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f"User {self.username}, ID {self.id}"
 
-    
-
 # Define Music model
 class Music(db.Model, SerializerMixin):
     __tablename__ = 'musics'

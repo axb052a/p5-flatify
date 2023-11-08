@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import { useTheme } from './ThemeContext'; 
+import { useTheme } from './ThemeContext';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -29,15 +29,22 @@ const Genre = () => {
   }, []);
 
   const handleCreateGenre = () => {
-    // Implement logic to create a new genre
+    // Check for empty inputs
+    if (!newGenreName || !newGenreImage) {
+      console.error('Please provide values for both name and image.');
+      return;
+    }
+
+    // To create a new genre
     fetch('http://localhost:5555/genre', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ 
-        name: newGenreName, 
-        image: newGenreImage }),
+      body: JSON.stringify({
+        name: newGenreName,
+        image: newGenreImage,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -49,21 +56,25 @@ const Genre = () => {
   };
 
   const handleUpdateGenre = () => {
-    // Implement logic to update selected genre
+    // To update selected genre
     if (selectedGenre) {
       fetch(`http://localhost:5555/genre/${selectedGenre.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           name: newGenreName,
-          image: newGenreImage, 
+          image: newGenreImage,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          setGenres(genres.map((genre) => (genre.id === selectedGenre.id ? data : genre)));
+          setGenres(
+            genres.map((genre) =>
+              genre.id === selectedGenre.id ? data : genre
+            )
+          );
           setNewGenreName('');
           setNewGenreImage('');
           setSelectedGenre(null);
@@ -73,7 +84,7 @@ const Genre = () => {
   };
 
   const handleDeleteGenre = (genreId) => {
-    // Implement logic to delete a genre
+    // To delete a genre
     fetch(`http://localhost:5555/genre/${genreId}`, {
       method: 'DELETE',
     })
@@ -84,24 +95,32 @@ const Genre = () => {
   };
 
   const handleEditGenre = (genre) => {
-    // Set selected genre for editing
+    // To set genre for editing
     setSelectedGenre(genre);
     setNewGenreName(genre.name);
     setNewGenreImage(genre.image);
   };
 
   return (
-    <Paper  elevation={3}
-    style={{
-      padding: '5px',
-      margin: '5px',
-      background: isDarkMode ? '#444444' : '#fff', 
-      color: isDarkMode ? '#F5F5DC' : '#333', 
-    }}>
-       <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
-      <IconButton onClick={toggleTheme} color="primary">
+    <Paper
+      elevation={3}
+      style={{
+        padding: '5px',
+        margin: '5px',
+        background: isDarkMode ? '#444444' : '#fff',
+        color: isDarkMode ? '#F5F5DC' : '#333',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'right',
+          alignItems: 'center',
+        }}
+      >
+        <IconButton onClick={toggleTheme} color="primary">
           {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+        </IconButton>
       </div>
       <Typography variant="h5" gutterBottom>
         Genres
@@ -131,7 +150,11 @@ const Genre = () => {
             <img
               src={genre.image}
               alt={genre.image}
-              style={{ width: '100px', height: '100px', marginRight: '10px' }}
+              style={{
+                width: '100px',
+                height: '100px',
+                marginRight: '10px',
+              }}
             />
             <ListItemText primary={genre.name} />
             <Button

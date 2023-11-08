@@ -30,7 +30,14 @@ const Playlist = () => {
   }, []);
 
   const handleCreatePlaylist = () => {
-    // Implement logic to create a new playlist
+
+    // Check for empty inputs
+    if (!newPlaylistName || !newPlaylistImage) {
+      console.error('Please provide values for both name and image.');
+      return;
+    }
+
+    // To create a new playlist
     fetch('http://localhost:5555/playlist', {
       method: 'POST',
       headers: {
@@ -50,7 +57,7 @@ const Playlist = () => {
   };
 
   const handleUpdatePlaylist = () => {
-    // Implement logic to update selected playlist
+    // To update selected playlist
     if (selectedPlaylist) {
       fetch(`http://localhost:5555/playlist/${selectedPlaylist.id}`, {
         method: 'PUT',
@@ -74,7 +81,7 @@ const Playlist = () => {
   };
 
   const handleDeletePlaylist = (playlistId) => {
-    // Implement logic to delete a playlist
+    // To delete a playlist
     fetch(`http://localhost:5555/playlist/${playlistId}`, {
       method: 'DELETE',
     })
@@ -85,7 +92,7 @@ const Playlist = () => {
   };
 
   const handleEditPlaylist = (playlist) => {
-    // Set selected playlist for editing
+    // To set playlist for editing
     setSelectedPlaylist(playlist);
     setNewPlaylistName(playlist.name);
     setNewPlaylistImage(playlist.image);
