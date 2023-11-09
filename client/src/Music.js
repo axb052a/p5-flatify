@@ -123,23 +123,6 @@ const Music = ({ user }) => {
     setNewMusicPlaylist(music.playlist ? music.playlist.id : ''); 
   };
 
-  const handleFavoriteMusic = (musicId) => {
-    // To mark a music item as a favorite
-    fetch('http://localhost:5555/favorite', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: user.id,
-        music_id: musicId,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(`Music with ID ${musicId} added to favorites.`, data))
-      .catch((error) => console.error('Error adding music to favorites:', error));
-  };
-
   return (
     <Paper  elevation={3}
     style={{
@@ -233,13 +216,6 @@ const Music = ({ user }) => {
               onClick={() => handleEditMusic(music)}
             >
               Edit
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => handleFavoriteMusic(music.id)}
-            >
-              Favorite
             </Button>
           </ListItem>
         ))}

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const ThemeContext = createContext();
+const ThemeContext = createContext({ isDarkMode: false, toggleTheme: () => {} });
 
 export const useTheme = () => {
   return useContext(ThemeContext);

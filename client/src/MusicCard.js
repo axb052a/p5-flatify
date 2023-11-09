@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, CardMedia, Paper } from '@mui/material';
+import { Card, CardContent, Typography, CardMedia, Paper, IconButton } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-const MusicCard = ({ id, title, artist, image, genre, playlist}) => {
+const MusicCard = ({ id, title, artist, image, genre, playlist }) => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
+  };
+
+  const handleFavorite = () => {
+    setIsFavorited(!isFavorited);
   };
 
   return (
@@ -35,6 +42,9 @@ const MusicCard = ({ id, title, artist, image, genre, playlist}) => {
           <Typography variant="subtitle1">Artist: {artist}</Typography>
           <Typography variant="subtitle1">Genre: {genre ? genre.name : 'No Genre'}</Typography>
           <Typography variant="subtitle1">Playlist: {playlist ? playlist.name : 'No Playlist'}</Typography>
+          <IconButton onClick={handleFavorite} style={{ marginLeft: 'auto', color: isFavorited ? 'gold' : 'grey' }}>
+            {isFavorited ? <StarIcon /> : <StarBorderIcon />}
+          </IconButton>
         </CardContent>
       </Paper>
     </Card>
