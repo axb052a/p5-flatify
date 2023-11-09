@@ -1,7 +1,6 @@
-
 # Flatify: A Music Full-Stack Application
 
-Flatify is a Full-Stack Music Application designed to provide users with a platform to explore, discover, and manage their favorite music. The application offers a range of features, including user authentication, music browsing, playlist creation, genre categorization, and more.
+Flatify is a Full-Stack Music Application designed to provide users with a platform to explore and discover. The application offers a range of features, including user authentication, music browsing, playlist creation, genre categorization, and more.
 
 ## Table of Contents
 
@@ -16,7 +15,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
   - [2. Music](#2-music)
   - [3. Genre](#3-genre)
   - [4. Playlist](#4-playlist)
-  - [5. Favorite](#5-favorite)
 
 ## Features
 
@@ -27,8 +25,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 - **Playlist Management:** Create, edit, and delete playlists. Add or remove music from playlists.
 
 - **Genre Categorization:** Music is categorized into genres, allowing users to discover music based on their preferences.
-
-- **Favorites:** Users can mark their favorite songs, and these favorites are associated with their user accounts.
 
 ## Frontend Components
 
@@ -80,8 +76,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 
 - Each user has a unique ID, username, email, and password hash.
 
-- Users have a one-to-many relationship with favorites, allowing them to mark multiple songs as favorites.
-
 - User authentication is handled securely with bcrypt.
 
 ### 2. Music
@@ -104,10 +98,4 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 
 - Playlists can include multiple music entries, and music can belong to multiple playlists.
 
-### 5. Favorite
-
-- Each favorite has a unique ID and is associated with a user and a music entry.
-
-- Favorites create a many-to-many relationship between users and music entries, allowing users to mark songs as favorites.
-
-Feel free to add specific endpoints, API documentation, or deployment instructions based on your project's details.
+For specific endpoints, API documentation, or deployment instructions, please refer to the respective frontend and backend documentation files.
