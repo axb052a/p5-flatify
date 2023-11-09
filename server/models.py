@@ -61,6 +61,10 @@ class Music(db.Model, SerializerMixin):
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlists.id'))
     playlist = db.relationship('Playlist', back_populates='musics')
             
+    # Serialization
+    serialize_rules = ('-genres', '-playlists')
+    
+    # Validation 
     @validates('title', 'artist')
     def validate_music_fields(self, key, value):
         if not (len(value) >= 3):
@@ -69,9 +73,6 @@ class Music(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"Music {self.title}, ID {self.id}"
-
-    # Serialization
-    serialize_rules = ('-genres', '-playlists')
 
 # Define Genre model
 class Genre(db.Model, SerializerMixin):
@@ -83,7 +84,10 @@ class Genre(db.Model, SerializerMixin):
     
     # Relationship
     musics = db.relationship('Music', back_populates='genre')
-
+    
+    # serialization
+    serialize_rules = ('-musics',)
+    
     @validates('name')
     def validate_genre_name(self, key, name):
         if not len(name) >= 3:
@@ -92,9 +96,6 @@ class Genre(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"Genre {self.name}, ID {self.id}"
-
-    # serialization
-    serialize_rules = ('-musics',)
 
 # Define Playlist model
 class Playlist(db.Model, SerializerMixin):

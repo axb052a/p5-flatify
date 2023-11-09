@@ -19,6 +19,7 @@ const Playlist = () => {
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [newPlaylistImage, setNewPlaylistImage] = useState('');
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [musicList, setMusicList] = useState([]);
   const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -29,11 +30,19 @@ const Playlist = () => {
       .catch((error) => console.error('Error fetching playlists:', error));
   }, []);
 
+  useEffect(() => {
+    // Fetch music data
+    fetch('http://localhost:5555/music')
+      .then((response) => response.json())
+      .then((data) => setMusicList(data))
+      .catch((error) => console.error('Error fetching music:', error));
+  }, []);
+
   const handleCreatePlaylist = () => {
 
     // Check for empty inputs
     if (!newPlaylistName || !newPlaylistImage) {
-      console.error('Please provide values for both name and image.');
+      console.log('Please provide values for both name and image.');
       return;
     }
 
@@ -98,6 +107,13 @@ const Playlist = () => {
     setNewPlaylistImage(playlist.image);
   };
 
+  const [showMusic, setShowMusic] = useState(null);
+
+  const handleShowMusic = (playlist) => {
+    setShowMusic(playlist.id === showMusic ? null : playlist.id);
+  };
+
+
   return (
     <Paper  elevation={3}
     style={{
@@ -140,6 +156,44 @@ const Playlist = () => {
             <Button variant="outlined" color="primary" onClick={() => handleEditPlaylist(playlist)}>
               Edit
             </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleShowMusic(playlist)}
+            >
+              {showMusic === playlist.id ? 'Hide Music' : 'Show Music'}
+            </Button>
+            {showMusic === playlist.id && (
+              <List>
+                {musicList
+                  .filter(
+                    (music) =>
+                      music.playlist && music.playlist.id === playlist.id
+                  )
+                  .map((music) => (
+                    <ListItem key={music.id}>
+                      <img
+                        src={music.image}
+                        alt={music.title}
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <ListItemText
+                        primary={music.title}
+                        secondary={
+                          <>
+                            <div>{music.artist}</div>
+                          </>
+                        }
+                      />
+                    </ListItem>
+                  ))}
+              </List>
+            )}
+
           </ListItem>
         ))}
       </List>

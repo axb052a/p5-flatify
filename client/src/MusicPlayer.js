@@ -1,18 +1,32 @@
-import React, { useState, useRef } from 'react';
+// MusicPlayer.js
+import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import Controls from './Controls';
 import ProgressBar from './ProgressBar';
 import NextSongPreview from './NextSongPreview';
-import { Container, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import MusicForm from './MusicForm';
+import { Container, Typography, Card, CardContent, CardMedia} from '@mui/material';
 import './MusicPlayer.css';
 
-const MusicPlayer = ({ musicList }) => {
+const MusicPlayer = ({ musicList: initialMusicList }) => {
+  const [musicList, setMusicList] = useState(() => {
+    // Retrieve musicList from localStorage 
+    const storedMusicList = localStorage.getItem('musicList');
+    return storedMusicList ? JSON.parse(storedMusicList) : initialMusicList;
+  });
+
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const audioRef = useRef();
+
+  useEffect(() => {
+    // Save musicList to localStorage
+    localStorage.setItem('musicList', JSON.stringify(musicList));
+  }, [musicList]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -45,6 +59,16 @@ const MusicPlayer = ({ musicList }) => {
 
   const handleSongEnd = () => {
     handleNextSong();
+  };
+
+  const handleFormToggle = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
+  const handleAddSong = (newSong) => {
+    const updatedMusicList = [...musicList, newSong];
+    setMusicList(updatedMusicList);
+    setIsFormVisible(false);
   };
 
   const nextSongIndex = (currentSongIndex + 1) % musicList.length;
@@ -94,7 +118,19 @@ const MusicPlayer = ({ musicList }) => {
         onVolumeChange={handleVolumeChange}
         volume={volume * 100}
       />
+      <button
+      style={{
+        fontSize: '14px',
+        padding: '10px 20px',
+      }}
+      onClick={handleFormToggle}
+    >
+      {isFormVisible ? 'Hide Form' : 'Add New Song'}
+    </button>
+
       <NextSongPreview nextSong={nextSong} />
+
+      {isFormVisible && <MusicForm onSubmit={handleAddSong} />}
     </Container>
   );
 };

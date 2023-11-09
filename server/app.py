@@ -150,7 +150,7 @@ class GenreResource(Resource):
         if genre_id is not None:
             genre = Genre.query.get(genre_id)
             if genre:
-                return make_response(genre.to_dict(include=['musics']), 200)
+                return make_response(genre.to_dict(), 200)
             else:
                 return make_response({"error": "Genre not found"}, 404)
         else:
@@ -210,7 +210,7 @@ class PlaylistResource(Resource):
         if playlist_id is not None:
             playlist = Playlist.query.get(playlist_id)
             if playlist:
-                return make_response(playlist.to_dict(include=['musics']), 200)
+                return make_response(playlist.to_dict(), 200)
             else:
                 return make_response({"error": "Playlist not found"}, 404)
         else:

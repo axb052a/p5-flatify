@@ -86,7 +86,7 @@ function Home({ user }) {
                 Listen to the songs in the {' '}
                 <NavLink to="/musicplayer" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
                   Music Player
-                </NavLink>{' '} to determine which songs stand out to you.              
+                </NavLink>{' '} to determine which songs stand out to you. You could favorite your favorite songs.           
                 </Typography>
               <SearchBar onSearch={handleSearch} />
             </>

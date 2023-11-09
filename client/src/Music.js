@@ -17,7 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-const Music = ({ user }) => {
+const Music = () => {
   const [musicList, setMusicList] = useState([]);
   const [genres, setGenres] = useState([]);
   const [playlists, setPlaylists] = useState([]);
@@ -53,7 +53,7 @@ const Music = ({ user }) => {
 
     // Check for empty inputs
     if (!newMusicTitle || !newMusicArtist || !newMusicImage || !newMusicGenre || !newMusicPlaylist) {
-      console.error('Please provide values for title, artist, image, genre, and playlist.');
+      console.log('Please provide values for title, artist, image, genre, and playlist.');
       return;
     }
 

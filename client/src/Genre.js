@@ -18,6 +18,7 @@ const Genre = () => {
   const [newGenreName, setNewGenreName] = useState('');
   const [newGenreImage, setNewGenreImage] = useState('');
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [musicList, setMusicList] = useState([]);
   const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
@@ -28,10 +29,18 @@ const Genre = () => {
       .catch((error) => console.error('Error fetching genres:', error));
   }, []);
 
+  useEffect(() => {
+    // Fetch music data
+    fetch('http://localhost:5555/music')
+      .then((response) => response.json())
+      .then((data) => setMusicList(data))
+      .catch((error) => console.error('Error fetching music:', error));
+  }, []);
+
   const handleCreateGenre = () => {
     // Check for empty inputs
     if (!newGenreName || !newGenreImage) {
-      console.error('Please provide values for both name and image.');
+      console.log('Please provide values for both name and image.');
       return;
     }
 
@@ -99,6 +108,12 @@ const Genre = () => {
     setSelectedGenre(genre);
     setNewGenreName(genre.name);
     setNewGenreImage(genre.image);
+  };
+
+  const [showMusic, setShowMusic] = useState(null);
+
+  const handleShowMusic = (genre) => {
+    setShowMusic(genre.id === showMusic ? null : genre.id);
   };
 
   return (
@@ -171,6 +186,43 @@ const Genre = () => {
             >
               Edit
             </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleShowMusic(genre)}
+            >
+              {showMusic === genre.id ? 'Hide Music' : 'Show Music'}
+            </Button>
+            {showMusic === genre.id && (
+              <List>
+                {musicList
+                  .filter(
+                    (music) =>
+                      music.genre && music.genre.id === genre.id
+                  )
+                  .map((music) => (
+                    <ListItem key={music.id}>
+                      <img
+                        src={music.image}
+                        alt={music.title}
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          marginRight: '10px',
+                        }}
+                      />
+                      <ListItemText
+                        primary={music.title}
+                        secondary={
+                          <>
+                            <div>{music.artist}</div>
+                          </>
+                        }
+                      />
+                    </ListItem>
+                  ))}
+              </List>
+            )}
           </ListItem>
         ))}
       </List>

@@ -40,8 +40,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 
 - **View All Music:** Users can view a list of all available music with details.
 
-- **View Single Music:** Users can click on a specific music item to view detailed information.
-
 - **Add Music:** Users can add new music entries to the database.
 
 - **Edit Music:** Users can edit existing music entries, updating details such as title, artist, and image.
@@ -49,8 +47,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 ### 3. Playlists
 
 - **View All Playlists:** Users can see a list of all playlists.
-
-- **View Single Playlist:** Users can click on a specific playlist to view its details and the associated music.
 
 - **Create Playlist:** Users can create a new playlist, adding a name and optional image.
 
@@ -61,8 +57,6 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 ### 4. Genres
 
 - **View All Genres:** Users can see a list of all genres.
-
-- **View Single Genre:** Users can click on a specific genre to view its details and the associated music.
 
 - **Create Genre:** Users can create a new genre, adding a name and optional image.
 

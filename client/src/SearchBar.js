@@ -13,7 +13,7 @@ function SearchBar({ onSearch }) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <TextField
-        label="Search songs"
+        label="Search songs or artists"
         variant="outlined"
         value={searchTerm}
         onChange={handleChange}
