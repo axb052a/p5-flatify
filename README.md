@@ -1,6 +1,6 @@
 # Flatify: A Music Full-Stack Application
 
-Flatify is a Full-Stack Music Application designed to provide users with a platform to explore and discover. The application offers a range of features, including user authentication, music browsing, playlist creation, genre categorization, and more.
+Flatify is a Full-Stack Music Application designed to provide users with a platform to explore, discover, and see their favorite music. The application offers a range of features, including user authentication, music browsing, playlist creation, genre categorization, and more.
 
 ## Table of Contents
 
@@ -15,6 +15,7 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
   - [2. Music](#2-music)
   - [3. Genre](#3-genre)
   - [4. Playlist](#4-playlist)
+  - [5. Favorite](#5-favorite)
 
 ## Features
 
@@ -25,6 +26,8 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 - **Playlist Management:** Create, edit, and delete playlists. Add or remove music from playlists.
 
 - **Genre Categorization:** Music is categorized into genres, allowing users to discover music based on their preferences.
+
+- **Favorites:** Users can see their favorite songs, and these favorites are associated with their user accounts.
 
 ## Frontend Components
 
@@ -48,6 +51,8 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 
 - **View All Playlists:** Users can see a list of all playlists.
 
+- **View Single Playlist:** Users can click on a specific playlist to view its details and the associated music.
+
 - **Create Playlist:** Users can create a new playlist, adding a name and optional image.
 
 - **Edit Playlist:** Users can edit existing playlists, updating details such as name and image.
@@ -57,6 +62,8 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 ### 4. Genres
 
 - **View All Genres:** Users can see a list of all genres.
+
+- **View Single Genre:** Users can click on a specific genre to view its details and the associated music.
 
 - **Create Genre:** Users can create a new genre, adding a name and optional image.
 
@@ -69,6 +76,8 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 ### 1. User
 
 - Each user has a unique ID, username, email, and password hash.
+
+- Users have a one-to-many relationship with favorites, allowing them to mark multiple songs as favorites.
 
 - User authentication is handled securely with bcrypt.
 
@@ -91,5 +100,11 @@ Flatify is a Full-Stack Music Application designed to provide users with a platf
 - Each playlist has a unique ID, name, image, and a many-to-many relationship with music.
 
 - Playlists can include multiple music entries, and music can belong to multiple playlists.
+
+### 5. Favorite
+
+- Each favorite has a unique ID and is associated with a user and a music entry.
+
+- Favorites create a many-to-many relationship between users and music entries, allowing users to see songs as favorites. Multiple musics are associated with many users. Many users can the same multiple music entries. 
 
 For specific endpoints, API documentation, or deployment instructions, please refer to the respective frontend and backend documentation files.

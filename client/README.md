@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# Flatify: A Music Full-Stack Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Flatify is a Full-Stack Music Application designed to provide users with a platform to explore, discover, and see their favorite music. The application offers a range of features, including user authentication, music browsing, playlist creation, genre categorization, and more.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Frontend Components](#frontend-components)
+  - [1. User Authentication](#1-user-authentication)
+  - [2. Music Browser](#2-music-browser)
+  - [3. Playlists](#3-playlists)
+  - [4. Genres](#4-genres)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **User Authentication:** Users can sign up, log in, and log out. Passwords are securely hashed and authenticated using bcrypt.
 
-### `npm test`
+- **Music Browsing:** Explore a diverse collection of music with details such as title, artist, and genre.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Playlist Management:** Create, edit, and delete playlists. Add or remove music from playlists.
 
-### `npm run build`
+- **Genre Categorization:** Music is categorized into genres, allowing users to discover music based on their preferences.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Favorites:** Users can see their favorite songs, and these favorites are associated with their user accounts.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Frontend Components
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. User Authentication
 
-### `npm run eject`
+- **Signup:** Users can create accounts by providing a username, email, and password.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Login:** Existing users can log in by providing their username and password.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Logout:** Users can log out, ending their current session.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 2. Music Browser
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **View All Music:** Users can view a list of all available music with details.
 
-## Learn More
+- **Add Music:** Users can add new music entries to the database.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Edit Music:** Users can edit existing music entries, updating details such as title, artist, and image.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Playlists
 
-### Code Splitting
+- **View All Playlists:** Users can see a list of all playlists.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **View Single Playlist:** Users can click on a specific playlist to view its details and the associated music.
 
-### Analyzing the Bundle Size
+- **Create Playlist:** Users can create a new playlist, adding a name and optional image.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Edit Playlist:** Users can edit existing playlists, updating details such as name and image.
 
-### Making a Progressive Web App
+- **Delete Playlist:** Users can delete a playlist, removing it from the system.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 4. Genres
 
-### Advanced Configuration
+- **View All Genres:** Users can see a list of all genres.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **View Single Genre:** Users can click on a specific genre to view its details and the associated music.
 
-### Deployment
+- **Create Genre:** Users can create a new genre, adding a name and optional image.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Edit Genre:** Users can edit existing genres, updating details such as name and image.
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Delete Genre:** Users can delete a genre, removing it from the system.
