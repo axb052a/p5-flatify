@@ -24,7 +24,7 @@ const Playlist = () => {
 
   useEffect(() => {
     // Fetch playlists data
-    fetch('http://localhost:5555/playlist')
+    fetch('/api/playlist', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setPlaylists(data))
       .catch((error) => console.error('Error fetching playlists:', error));
@@ -32,7 +32,7 @@ const Playlist = () => {
 
   useEffect(() => {
     // Fetch music data
-    fetch('http://localhost:5555/music')
+    fetch('/api/music', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setMusicList(data))
       .catch((error) => console.error('Error fetching music:', error));
@@ -47,7 +47,7 @@ const Playlist = () => {
     }
 
     // To create a new playlist
-    fetch('http://localhost:5555/playlist', {
+    fetch('/api/playlist', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const Playlist = () => {
   const handleUpdatePlaylist = () => {
     // To update selected playlist
     if (selectedPlaylist) {
-      fetch(`http://localhost:5555/playlist/${selectedPlaylist.id}`, {
+      fetch(`/api/playlist/${selectedPlaylist.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const Playlist = () => {
 
   const handleDeletePlaylist = (playlistId) => {
     // To delete a playlist
-    fetch(`http://localhost:5555/playlist/${playlistId}`, {
+    fetch(`/api/playlist/${playlistId}`, {
       method: 'DELETE',
     })
       .then(() => {

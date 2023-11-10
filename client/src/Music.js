@@ -31,19 +31,19 @@ const Music = () => {
 
   useEffect(() => {
     // Fetch music data
-    fetch('http://localhost:5555/music')
+    fetch('/api/music', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setMusicList(data))
       .catch((error) => console.error('Error fetching music:', error));
 
     // Fetch genres data
-    fetch('http://localhost:5555/genre')
+    fetch('/api/genre', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setGenres(data))
       .catch((error) => console.error('Error fetching genres:', error));
 
     // Fetch playlists data
-    fetch('http://localhost:5555/playlist')
+    fetch('/api/playlist', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setPlaylists(data))
       .catch((error) => console.error('Error fetching playlists:', error));
@@ -58,7 +58,7 @@ const Music = () => {
     }
 
     // To create a new music
-    fetch('http://localhost:5555/music', {
+    fetch('/api/music', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const Music = () => {
   const handleUpdateMusic = () => {
     // To update selected music
     if (selectedMusic) {
-      fetch(`http://localhost:5555/music/${selectedMusic.id}`, {
+      fetch(`/api/music/${selectedMusic.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

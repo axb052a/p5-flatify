@@ -12,7 +12,7 @@ function Home({ user }) {
 
   useEffect(() => {
     // Fetch music data
-    fetch('http://localhost:5555/music')
+    fetch('/api/music', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => {
         setMusicList(data);

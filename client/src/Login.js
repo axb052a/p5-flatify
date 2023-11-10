@@ -21,7 +21,7 @@ const Login = ({ setUser }) => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      fetch('http://localhost:5555/login', {
+      fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

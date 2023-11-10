@@ -25,7 +25,7 @@ function NavBar({ user, setUser }) {
   };
 
   const handleLogout = () => {
-    fetch("http://localhost:5555/logout", { method: "DELETE" }).then((r) => {
+    fetch("/api/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
         // Navigate to the home page after successful logout
@@ -86,6 +86,7 @@ function NavBar({ user, setUser }) {
               onClose={handleMenuClose}
             >
               <MenuItem component={NavLink} to="/profile">Profile</MenuItem>
+              <MenuItem component={NavLink} to="/favorite">Favorite</MenuItem>
             </Menu>
           </Box>
         )}

@@ -23,7 +23,7 @@ const Genre = () => {
 
   useEffect(() => {
     // Fetch genres data
-    fetch('http://localhost:5555/genre')
+    fetch('/api/genre', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setGenres(data))
       .catch((error) => console.error('Error fetching genres:', error));
@@ -31,7 +31,7 @@ const Genre = () => {
 
   useEffect(() => {
     // Fetch music data
-    fetch('http://localhost:5555/music')
+    fetch('/api/music', {credentials: "include"})
       .then((response) => response.json())
       .then((data) => setMusicList(data))
       .catch((error) => console.error('Error fetching music:', error));
@@ -45,7 +45,7 @@ const Genre = () => {
     }
 
     // To create a new genre
-    fetch('http://localhost:5555/genre', {
+    fetch('/api/genre', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const Genre = () => {
   const handleUpdateGenre = () => {
     // To update selected genre
     if (selectedGenre) {
-      fetch(`http://localhost:5555/genre/${selectedGenre.id}`, {
+      fetch(`/api/genre/${selectedGenre.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const Genre = () => {
 
   const handleDeleteGenre = (genreId) => {
     // To delete a genre
-    fetch(`http://localhost:5555/genre/${genreId}`, {
+    fetch(`/api/genre/${genreId}`, {
       method: 'DELETE',
     })
       .then(() => {

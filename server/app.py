@@ -273,14 +273,30 @@ class PlaylistResource(Resource):
 
         return make_response({"message": "Playlist deleted successfully"}, 204)
 
+class FavoriteResource(Resource):
+    def get(self, user_id=None):
+        if user_id is None:
+            user_id = session.get("user_id")
+
+        if not user_id:
+            return make_response({"error": "User ID is required"}, 400)
+
+        user = User.query.get(user_id)
+        if not user:
+            return make_response({"error": "User not found"}, 404)
+
+        favorites = Favorite.query.filter_by(user_id=user_id).all()
+        return make_response([favorite.music.to_dict() for favorite in favorites], 200)
+            
 # Add routes to the API
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
 api.add_resource(CheckSession, "/check_session")
 api.add_resource(Logout, "/logout")
-api.add_resource(MusicResource, "/music", "/music/<int:music_id>")
+api.add_resource(MusicResource, '/music', "/music/<int:music_id>")
 api.add_resource(GenreResource, "/genre", "/genre/<int:genre_id>")
 api.add_resource(PlaylistResource, "/playlist", "/playlist/<int:playlist_id>")
+api.add_resource(FavoriteResource, "/favorite", "/favorite/<int:user_id>")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
