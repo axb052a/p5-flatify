@@ -3,33 +3,42 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import './MusicForm.css';
 
 const MusicForm = ({ onSubmit }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
-  const [audioSrc, setAudioSrc] = useState('');
+  const [audioFile, setAudioFile] = useState(null);
   const [image, setImage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newSong = { title, artist, audioSrc, image };
-    onSubmit(newSong);
+    
+    // Create a new FormData object
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('artist', artist);
+    formData.append('audioFile', audioFile);
+    formData.append('image', image);
+
+    // onSubmit will now receive formData
+    onSubmit(formData);
+
     // Clear form fields
     setTitle('');
     setArtist('');
-    setAudioSrc('');
+    setAudioFile(null);
     setImage('');
   };
 
+  const handleAudioFileChange = (e) => {
+    const file = e.target.files[0];
+    setAudioFile(file);
+  };
+
   return (
-    <Paper
-      elevation={3}
-      className="music-form-container" 
-    >
+    <Paper elevation={3} className="music-form-container">
       <form onSubmit={handleSubmit} className="music-form">
-         <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>
-          Add Song
-        </Button>
         <TextField
           type="text"
           label="Title"
@@ -48,14 +57,12 @@ const MusicForm = ({ onSubmit }) => {
           margin="normal"
           required
         />
-        <TextField
-          type="text"
-          label="Audio Source"
-          value={audioSrc}
-          onChange={(e) => setAudioSrc(e.target.value)}
-          fullWidth
-          margin="normal"
-          required
+        {/* Replace TextField for audioSrc with input of type file */}
+        <input
+          type="file"
+          accept="audio/mp3"
+          onChange={handleAudioFileChange}
+          style={{ margin: '10px 0' }}
         />
         <TextField
           type="text"
@@ -66,7 +73,14 @@ const MusicForm = ({ onSubmit }) => {
           margin="normal"
           required
         />
-       
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '20px' }}
+        >
+          Add Song
+        </Button>
       </form>
     </Paper>
   );

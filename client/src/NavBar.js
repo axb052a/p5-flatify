@@ -45,9 +45,9 @@ function NavBar({ user, setUser }) {
       <Toolbar>
         <Typography
           variant="h6"
-          sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}
+          sx={{ display: 'flex', alignItems: 'center', color: "green", fontWeight: "bold", flexGrow: 1 }}
         >
-          Flatify
+         Flatify
         </Typography>
         {user && (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

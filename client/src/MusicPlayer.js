@@ -5,12 +5,10 @@ import Controls from './Controls';
 import ProgressBar from './ProgressBar';
 import NextSongPreview from './NextSongPreview';
 import MusicForm from './MusicForm';
-import { Container, Typography, Card, CardContent, CardMedia} from '@mui/material';
 import './MusicPlayer.css';
 
 const MusicPlayer = ({ musicList: initialMusicList }) => {
-  const [musicList, setMusicList] = useState(() => {
-    // Retrieve musicList from localStorage 
+  const [musicList] = useState(() => {
     const storedMusicList = localStorage.getItem('musicList');
     return storedMusicList ? JSON.parse(storedMusicList) : initialMusicList;
   });
@@ -21,10 +19,10 @@ const MusicPlayer = ({ musicList: initialMusicList }) => {
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isShuffleActive, setIsShuffleActive] = useState(false);
   const audioRef = useRef();
 
   useEffect(() => {
-    // Save musicList to localStorage
     localStorage.setItem('musicList', JSON.stringify(musicList));
   }, [musicList]);
 
@@ -40,6 +38,23 @@ const MusicPlayer = ({ musicList: initialMusicList }) => {
     setCurrentSongIndex((prevIndex) =>
       prevIndex === 0 ? musicList.length - 1 : prevIndex - 1
     );
+  };
+
+  const handleShuffle = () => {
+    setIsShuffleActive(!isShuffleActive);
+
+    if (isShuffleActive) {
+      setCurrentSongIndex((prevIndex) => (prevIndex + 1) % musicList.length);
+      localStorage.setItem('musicList', JSON.stringify(musicList));
+    } else {
+      const shuffledList = [...musicList];
+      for (let i = shuffledList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledList[i], shuffledList[j]] = [shuffledList[j], shuffledList[i]];
+      }
+      setCurrentSongIndex(0);
+      localStorage.setItem('musicList', JSON.stringify(shuffledList));
+    }
   };
 
   const handleSeek = (value) => {
@@ -61,40 +76,48 @@ const MusicPlayer = ({ musicList: initialMusicList }) => {
     handleNextSong();
   };
 
-  const handleFormToggle = () => {
+  const nextSongIndex = (currentSongIndex + 1) % musicList.length;
+  const nextSong = musicList[nextSongIndex];
+  const currentSong = musicList[currentSongIndex];
+
+  const toggleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
   };
 
-  const handleAddSong = (newSong) => {
-    const updatedMusicList = [...musicList, newSong];
-    setMusicList(updatedMusicList);
-    setIsFormVisible(false);
-  };
-
-  const nextSongIndex = (currentSongIndex + 1) % musicList.length;
-  const nextSong = musicList[nextSongIndex];
-
   return (
-    <Container className={`music-player-container`}>
-      <Card className="song-info">
-        <CardMedia
-          component="img"
-          alt="Album Cover"
-          height="140"
-          image={musicList[currentSongIndex].image}
+    <div className="music-player-container">
+      <button className="toggle-form-button" onClick={toggleFormVisibility}>
+        {isFormVisible ? 'Hide Form' : 'Add Song'}
+      </button>
+
+      {isFormVisible && (
+        <MusicForm
+          onSubmit={(newSong) => {
+            console.log('New song added:', newSong);
+          }}
         />
-        <CardContent>
-          <Typography variant="h5">
-            {musicList[currentSongIndex].title}
-          </Typography>
-          <Typography variant="subtitle1">
-            {musicList[currentSongIndex].artist}
-          </Typography>
-        </CardContent>
-      </Card>
+      )}
+
+      <div className="song-info">
+        {currentSong && (
+          <img
+            alt="Album Cover"
+            height="140"
+            src={currentSong.image}
+          />
+        )}
+        <div>
+          {currentSong && (
+            <>
+              <h5>{currentSong.title}</h5>
+              <p>{currentSong.artist}</p>
+            </>
+          )}
+        </div>
+      </div>
       <ReactPlayer
         ref={audioRef}
-        url={musicList[currentSongIndex].audioSrc}
+        url={currentSong ? currentSong.audioSrc : ''}
         playing={isPlaying}
         volume={isMuted ? 0 : volume}
         onProgress={(e) => setCurrentTime(e.playedSeconds)}
@@ -112,26 +135,16 @@ const MusicPlayer = ({ musicList: initialMusicList }) => {
         onPrev={handlePrevSong}
         onPlayPause={handlePlayPause}
         onNext={handleNextSong}
+        onShuffle={handleShuffle}
         isPlaying={isPlaying}
         onVolumeToggle={handleVolumeToggle}
         isMuted={isMuted}
         onVolumeChange={handleVolumeChange}
         volume={volume * 100}
+        isShuffleActive={isShuffleActive}
       />
-      <button
-      style={{
-        fontSize: '14px',
-        padding: '10px 20px',
-      }}
-      onClick={handleFormToggle}
-    >
-      {isFormVisible ? 'Hide Form' : 'Add New Song'}
-    </button>
-
       <NextSongPreview nextSong={nextSong} />
-
-      {isFormVisible && <MusicForm onSubmit={handleAddSong} />}
-    </Container>
+    </div>
   );
 };
 

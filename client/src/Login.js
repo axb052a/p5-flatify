@@ -59,7 +59,7 @@ const Login = ({ setUser }) => {
       style={{
         padding: '20px',
         margin: '20px',
-        backgroundImage: 'url("https://wallpaperaccess.com/full/3407562.jpg")',
+        backgroundImage: 'url("https://images.unsplash.com/photo-1514477917009-389c76a86b68?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGluayUyMHNreXxlbnwwfHwwfHx8MA%3D%3D")',
         backgroundSize: 'cover',
         minHeight: '100vh',
         display: 'center',
@@ -102,7 +102,7 @@ const Login = ({ setUser }) => {
           margin="normal"
           required
         />
-        <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px' }}>
+        <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', color: "white", fontWeight: 'bold' }}>
           Sign In
         </Button>
       </form>

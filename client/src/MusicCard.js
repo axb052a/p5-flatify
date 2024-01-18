@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+// MusicCard.js
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, CardMedia, Paper, IconButton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-const MusicCard = ({ id, title, artist, image, genre, playlist }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+const MusicCard = ({ id, title, artist, image, genre, playlist, onFavorite }) => {
   const [isFavorited, setIsFavorited] = useState(false);
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  useEffect(() => {
+    // Check local storage for favorite status on component mount
+    const storedFavorite = localStorage.getItem(`favorite_${id}`);
+    if (storedFavorite !== null) {
+      setIsFavorited(JSON.parse(storedFavorite));
+    }
+  }, [id]);
 
   const handleFavorite = () => {
-    setIsFavorited(!isFavorited);
+    const newFavoriteStatus = !isFavorited;
+
+    // Save the favorite status to local storage
+    localStorage.setItem(`favorite_${id}`, JSON.stringify(newFavoriteStatus));
+
+    setIsFavorited(newFavoriteStatus);
+    onFavorite(id, newFavoriteStatus); // Notify parent component about the favorite status change
   };
 
   return (
@@ -24,9 +34,8 @@ const MusicCard = ({ id, title, artist, image, genre, playlist }) => {
         transformStyle: 'preserve-3d',
         transition: 'transform 0.6s',
         cursor: 'pointer',
-        transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0)',
+        transform: 'rotateY(0)', // Removed flip functionality
       }}
-      onClick={handleFlip}
     >
       <Paper elevation={3} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <CardMedia

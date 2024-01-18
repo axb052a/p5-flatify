@@ -1,33 +1,45 @@
 /* MusicPlayer.css */
 .music-player-container {
-  width: 600px;
-  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   padding: 20px;
-  border: 1px solid black;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #121212;
+  color: #fff;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
 }
 
 .song-info {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Increased margin for better spacing */
 }
 
 .song-info img {
-  width: 400px;
-  height: 400px;
-  margin-right: 40px;
+  width: 150px;
+  height: 150px;
+  margin-right: 20px; /* Increased margin for better spacing */
   border-radius: 4px;
 }
 
-.song-details h2 {
+.song-details {
+  text-align: center; /* Center text content */
+}
+
+.song-details h5,
+.song-details p {
   margin: 0;
+  color: #fff;
 }
 
 .audio-player {
-  margin-bottom: 30px;
+  margin: 20px 0; /* Increased margin for better spacing */
 }
 
 .controls {
@@ -38,15 +50,83 @@
 }
 
 .controls button {
-  background-color: #4caf50;
-  color: black;
-  padding: 10px;
-  margin: 5px;
+  background-color: transparent;
   border: none;
-  border-radius: 4px;
+  margin: 0 15px; /* Increased margin for better spacing */
+  font-size: 24px;
+  color: #fff;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .controls button:hover {
-  background-color: #45a049;
+  color: #1ed760;
+}
+
+.controls button:disabled {
+  color: #555;
+  cursor: not-allowed;
+}
+
+.controls button.play-pause {
+  font-size: 32px;
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.time-labels {
+  display: flex;
+  align-items: center;
+  color: #888;
+}
+
+.time-labels p {
+  margin: 0 15px; /* Increased margin for better spacing */
+}
+
+.progress-bar-wrapper {
+  flex: 1;
+  margin: 0 15px; /* Increased margin for better spacing */
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+}
+
+.volume-icon {
+  font-size: 20px;
+  margin-right: 15px; /* Increased margin for better spacing */
+  color: #888;
+}
+
+.volume-slider {
+  flex: 1;
+}
+
+.shuffle-active {
+  filter: brightness(1.5);
+}
+
+.toggle-form-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #1ed760;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-form-button:hover {
+  background-color: #168e52;
 }

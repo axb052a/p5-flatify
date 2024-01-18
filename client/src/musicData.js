@@ -214,7 +214,7 @@ const musicList = [
     title: 'Snooze',
     artist: 'SZA',
     audioSrc: '/music/snooze.mp3',
-    image: 'https://i.scdn.co/image/ab67706c0000da84a931a09057817e5122ee5c58',
+    image: 'https://hips.hearstapps.com/hmg-prod/images/ezgif-2-0a120c7e59-1670600995.jpeg?crop=0.668xw:1.00xh;0.167xw,0&resize=1200:*',
   },
   {
     title: 'Frozen',

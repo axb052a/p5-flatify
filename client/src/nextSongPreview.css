@@ -1,31 +1,32 @@
 /* nextSongPreview.css */
 
 .next-song-preview {
-  position: flex;
+  position: relative;
   top: 10px;
   right: 10px;
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.6); 
-  padding: 10px;
+  background-color: #212121; /* Darker background */
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .next-song-preview img {
-  max-width: 140px;
-  max-height: 140px;
-  margin-right: 10px;
+  width: 160px;
+  height: 160px;
   border-radius: 4px;
 }
 
-.next-song-preview div {
-  flex: 1;
+.next-song-preview .next-song-details {
+  padding: 10px;
 }
 
-.next-song-preview h3,
-.next-song-preview h4,
+.next-song-preview h6,
 .next-song-preview p {
   margin: 0;
-  color: white; /* Set text color to white for better visibility */
+  color: #fff; /* Light text color */
+}
+
+.next-song-preview:hover {
+  transform: translateY(-4px);
 }

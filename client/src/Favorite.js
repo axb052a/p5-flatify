@@ -1,3 +1,5 @@
+// Favorite.js
+
 import React, { useState, useEffect } from 'react';
 import { Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
 
@@ -17,7 +19,7 @@ const Favorite = ({ user }) => {
   return (
     <div>
       <Typography variant="h4" gutterBottom>
-        Your Favorite List
+        Favorite Songs
       </Typography>
       <List>
         {favorites.map((favorite) => (

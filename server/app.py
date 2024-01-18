@@ -287,7 +287,47 @@ class FavoriteResource(Resource):
 
         favorites = Favorite.query.filter_by(user_id=user_id).all()
         return make_response([favorite.music.to_dict() for favorite in favorites], 200)
-            
+    
+    def post(self, user_id):
+        data = request.get_json()
+
+        music_id = data.get("music_id")
+        if not music_id:
+            return make_response({"error": "Music ID is required"}, 400)
+
+        user = User.query.get(user_id)
+        music = Music.query.get(music_id)
+
+        if not (user and music):
+            return make_response({"error": "User or music not found"}, 404)
+
+        # Check if the music is already a favorite
+        existing_favorite = Favorite.query.filter_by(user_id=user_id, music_id=music_id).first()
+
+        if not existing_favorite:
+            # Add the music to the user's favorites
+            new_favorite = Favorite(user_id=user_id, music_id=music_id)
+            db.session.add(new_favorite)
+            db.session.commit()
+
+        return make_response({"message": "Favorite added successfully"}, 201)
+    
+    # def delete(self, user_id, music_id):
+    #     user = User.query.get(user_id)
+    #     music = Music.query.get(music_id)
+
+    #     if not (user and music):
+    #         return make_response({"error": "User or music not found"}, 404)
+
+    #     # Remove the music from the user's favorites
+    #     favorite = Favorite.query.filter_by(user_id=user_id, music_id=music_id).first()
+
+    #     if favorite:
+    #         db.session.delete(favorite)
+    #         db.session.commit()
+
+    #     return make_response({"message": "Favorite removed successfully"}, 204)
+                
 # Add routes to the API
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")

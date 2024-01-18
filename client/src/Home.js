@@ -12,7 +12,7 @@ function Home({ user }) {
 
   useEffect(() => {
     // Fetch music data
-    fetch('/api/music', {credentials: "include"})
+    fetch('/api/music', { credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         setMusicList(data);
@@ -36,13 +36,18 @@ function Home({ user }) {
     }
   };
 
+  const handleFavorite = (musicId, isFavorited) => {
+    // Perform actions to update the user's favorite list in the frontend
+    // You may update the state or refetch the favorite list for the user
+  };
+
   return (
     <Grid
       container
       spacing={3}
       mt={3}
       style={{
-        backgroundImage: 'url("https://wallpapercave.com/wp/wp5637699.jpg")',
+        backgroundImage: 'url("https://wallpapers.com/images/hd/black-gradient-background-ov696eaxmtawst0g.jpg")',
         backgroundSize: 'cover',
         minHeight: '100vh',
       }}
@@ -64,7 +69,7 @@ function Home({ user }) {
             ) : (
               <div>
                 <img
-                  src="https://wallpapercave.com/wp/wp7937753.jpg"
+                  src="https://t4.ftcdn.net/jpg/05/40/74/59/360_F_540745919_7LPqk3reCw26tdABJ1EsU6n4XsoI7f6U.jpg"
                   alt="Flatify Logo"
                   style={{
                     maxWidth: '600px',
@@ -82,23 +87,23 @@ function Home({ user }) {
           {user ? (
             <>
               <Typography variant="body18" paragraph>
-                Flatify is a platform to find and explore songs in multiple genres and playlists. Explore the Music Cards to see a song title associated with an artist, genre and playlist.
+                Flatify is a platform to find and explore songs in multiple genres and playlists. Explore the Music Cards to see a song title associated with an artist, genre, and playlist.
                 Listen to the songs in the {' '}
-                <NavLink to="/musicplayer" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
+                <NavLink to="/musicplayer" style={{ textDecoration: 'none', color: "green", fontWeight: 'bold', fontSize: '1.0em' }}>
                   Music Player
-                </NavLink>{' '} to determine which songs stand out to you. You could favorite your favorite songs.           
-                </Typography>
+                </NavLink>{' '} to determine which songs stand out to you. You could favorite your favorite songs.
+              </Typography>
               <SearchBar onSearch={handleSearch} />
             </>
           ) : (
             <Typography variant="body18" paragraph>
               Welcome to Flatify! Flatify is a platform designed to help you find and explore songs, genres, and playlists. To get started, please{' '}
-              <NavLink to="/login" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
-                log in
+              <NavLink to="/login" style={{ textDecoration: 'none', color: "green", fontWeight: 'bold', fontSize: '1.0em' }}>
+                Log In
               </NavLink>{' '}
               or{' '}
-              <NavLink to="/signup" style={{ textDecoration: 'none', fontWeight: 'bold', fontSize: '1.0em' }}>
-                sign up
+              <NavLink to="/signup" style={{ textDecoration: 'none', color: "green", fontWeight: 'bold', fontSize: '1.0em' }}>
+                Sign Up
               </NavLink>
               . Our extensive database provides a comprehensive collection of music, making it accessible and tailored to your preferences.
               Whether you're a music enthusiast or someone curious about different genres, Flatify offers a personalized listening experience.
@@ -124,6 +129,7 @@ function Home({ user }) {
                       image={music.image}
                       genre={music.genre}
                       playlist={music.playlist}
+                      onFavorite={handleFavorite}
                     />
                   </Grid>
                 ))

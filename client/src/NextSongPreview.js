@@ -1,24 +1,17 @@
-// NextSongPreview.js
 import React from 'react';
-import { Typography, Card, CardContent, CardMedia } from '@mui/material';
 import './nextSongPreview.css';
 
 const NextSongPreview = ({ nextSong }) => (
-  <Card className="next-song-preview">
-    <CardContent>
-      <Typography variant="h6">Next:</Typography>
-      <CardMedia
-        component="img"
-        alt="Next Song Cover"
-        height="140"
-        image={nextSong.image}
-      />
-      <div>
-        <Typography variant="subtitle1">{nextSong.title}</Typography>
-        <Typography variant="caption">{nextSong.artist}</Typography>
-      </div>
-    </CardContent>
-  </Card>
+  <div className="next-song-preview">
+    <div>
+      <h6>Next:</h6>
+      <img alt="Next Song Cover" height="140" src={nextSong.image} />
+    </div>
+    <div className="next-song-details">
+      <p>{nextSong.title}</p>
+      <p>{nextSong.artist}</p>
+    </div>
+  </div>
 );
 
 export default NextSongPreview;
