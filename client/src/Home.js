@@ -37,8 +37,6 @@ function Home({ user }) {
   };
 
   const handleFavorite = (musicId, isFavorited) => {
-    // Perform actions to update the user's favorite list in the frontend
-    // You may update the state or refetch the favorite list for the user
   };
 
   return (
@@ -47,9 +45,13 @@ function Home({ user }) {
       spacing={3}
       mt={3}
       style={{
+        position: 'absolute',
+        top: '64px', 
+        left: 0,
+        width: '100%',
         backgroundImage: 'url("https://wallpapers.com/images/hd/black-gradient-background-ov696eaxmtawst0g.jpg")',
         backgroundSize: 'cover',
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 64px)',
       }}
     >
       <Grid item xs={12}>
@@ -108,7 +110,15 @@ function Home({ user }) {
               . Our extensive database provides a comprehensive collection of music, making it accessible and tailored to your preferences.
               Whether you're a music enthusiast or someone curious about different genres, Flatify offers a personalized listening experience.
               Unlock the world of music and expand your playlist. Join us on this musical journey as we make discovering new songs exciting.
-              Start your exploration today!
+              Start your exploration today! Visit
+              {' '}<NavLink to="/about" style={{ textDecoration: 'none', color: "green", fontWeight: 'bold', fontSize: '1.0em' }}>
+                About
+              </NavLink>{' '}
+              to learn more about the app and its functionality. Read my 
+              {' '}<NavLink to="/biography" style={{ textDecoration: 'none', color: "green", fontWeight: 'bold', fontSize: '1.0em' }}>
+                Biography
+              </NavLink>{' '}
+              to learn and get to know me on a personal level as a software engineer. 
             </Typography>
           )}
         </Paper>

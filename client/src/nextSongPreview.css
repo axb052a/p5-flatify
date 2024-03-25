@@ -1,32 +1,33 @@
 /* nextSongPreview.css */
-
 .next-song-preview {
-  position: relative;
-  top: 10px;
-  right: 10px;
-  background-color: #212121; /* Darker background */
+  position: relative; /* Change to relative */
+  background-color: #212121; /* Dark gray background */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  display: flex; /* Ensure children are displayed in a row */
+  grid-column: 1 / -1; /* Span across all columns */
+  justify-content: center; /* Center horizontally */
 }
 
 .next-song-preview img {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 4px;
 }
 
-.next-song-preview .next-song-details {
-  padding: 10px;
+.next-song-details {
+  text-align: left; /* Align text to left */
+  padding: 20px;
 }
 
-.next-song-preview h6,
-.next-song-preview p {
+.next-song-details h5,
+.next-song-details p {
   margin: 0;
   color: #fff; /* Light text color */
 }
 
-.next-song-preview:hover {
-  transform: translateY(-4px);
+.next-song-divider {
+  width: 1px;
+  background-color: #333; /* Darker divider color */
 }

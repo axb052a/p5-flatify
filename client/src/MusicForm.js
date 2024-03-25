@@ -13,7 +13,7 @@ const MusicForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Create a new FormData object
     const formData = new FormData();
     formData.append('title', title);
@@ -29,6 +29,9 @@ const MusicForm = ({ onSubmit }) => {
     setArtist('');
     setAudioFile(null);
     setImage('');
+
+    // Alert the user
+    alert('Form submitted successfully!');
   };
 
   const handleAudioFileChange = (e) => {

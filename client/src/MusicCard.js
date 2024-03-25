@@ -22,7 +22,7 @@ const MusicCard = ({ id, title, artist, image, genre, playlist, onFavorite }) =>
     localStorage.setItem(`favorite_${id}`, JSON.stringify(newFavoriteStatus));
 
     setIsFavorited(newFavoriteStatus);
-    onFavorite(id, newFavoriteStatus); // Notify parent component about the favorite status change
+    onFavorite(id, newFavoriteStatus); 
   };
 
   return (
@@ -34,7 +34,7 @@ const MusicCard = ({ id, title, artist, image, genre, playlist, onFavorite }) =>
         transformStyle: 'preserve-3d',
         transition: 'transform 0.6s',
         cursor: 'pointer',
-        transform: 'rotateY(0)', // Removed flip functionality
+        transform: 'rotateY(0)', 
       }}
     >
       <Paper elevation={3} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

@@ -82,7 +82,7 @@ if __name__ == '__main__':
             {'title': 'Innerbloom', 'artist': 'Rüfüs Du Sol', 'image': 'https://i.scdn.co/image/ab67616d0000b273d7d354b5ee37f62c88e392d9'},
             {'title': 'Shelter', 'artist': 'Porter Robinson ft Madeon', "image":'https://i.scdn.co/image/ab67616d0000b2730b4df34612f851b639959f9a'},
             {'title': 'Jungle', 'artist': 'fred again', "image":'https://i.scdn.co/image/ab67616d0000b273e88a1b90870837f8f376457a'},
-            {'title': 'Snooze', 'artist': 'SZA', "image":'https://i.scdn.co/image/ab67616d0000b27370dbc9f47669d120ad874ec1'},
+            {'title': 'Snooze', 'artist': 'SZA', "image":'https://bhsrounduponline.org/wp-content/uploads/2023/04/image.jpg'},
             {'title': 'Frozen', 'artist': 'Sabrina Claudio', "image":'https://i.scdn.co/image/ab67616d0000b27376165991d7aeecce3634f554'},
             {'title': 'Can I Kick It?', 'artist': 'A Tribe Called Quest', "image":'https://i.scdn.co/image/ab67616d0000b2734ba1fe238a517021ebcc2ace'},
             {'title': 'Super Bass', 'artist': 'Nicki Minaj', "image":'https://i.scdn.co/image/ab67616d0000b27370b8b4f85ef33b4d81bcaea6'},

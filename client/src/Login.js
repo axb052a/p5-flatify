@@ -58,7 +58,11 @@ const Login = ({ setUser }) => {
       elevation={3}
       style={{
         padding: '20px',
-        margin: '20px',
+        position: 'absolute', 
+        top: '64px', 
+        left: 0,
+        width: '100%',
+        height: 'calc(100% - 64px)',
         backgroundImage: 'url("https://images.unsplash.com/photo-1514477917009-389c76a86b68?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGluayUyMHNreXxlbnwwfHwwfHx8MA%3D%3D")',
         backgroundSize: 'cover',
         minHeight: '100vh',

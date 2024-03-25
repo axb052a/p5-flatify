@@ -78,7 +78,11 @@ function SignUp() {
       elevation={3}
       style={{
         padding: '20px',
-        margin: '20px',
+        position: 'absolute', 
+        top: '64px', 
+        left: 0,
+        width: '100%',
+        height: 'calc(100% - 64px)',
         backgroundImage: 'url("https://i.pinimg.com/originals/89/74/5a/89745a63f2068d793d23e47f79e65fbc.jpg")',
         backgroundSize: 'cover',
         minHeight: '100vh',

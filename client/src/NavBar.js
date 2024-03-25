@@ -97,6 +97,12 @@ function NavBar({ user, setUser }) {
             <Button color="inherit" component={NavLink} to="/">
               Home
             </Button>
+            <Button color="inherit" component={NavLink} to="/about">
+              About
+            </Button>
+            <Button color="inherit" component={NavLink} to="/biography">
+              Bio
+            </Button>
             <Button color="inherit" component={NavLink} to="/signup">
               Signup
             </Button>

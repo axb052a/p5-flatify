@@ -14,6 +14,8 @@ import Music from './Music';
 import MusicPlayer from './MusicPlayer';
 import musicList from './musicData';
 import Favorite from './Favorite';
+import Biography from './Biography';
+import About from './About';
 
 function App() {
   const [user, setUser] = useState();
@@ -47,6 +49,8 @@ function App() {
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/logout" element={<Logout setUser={setUser} />} />
           <Route path="/signup" element={<Signup user={user} setUser={setUser} />} />
+          <Route path="/about" element={<About  />} />
+          <Route path="/biography" element={<Biography />} />
           <Route
             path="/"
             element={user ? <UserProfile user={user} /> : <Home user={user} />}
